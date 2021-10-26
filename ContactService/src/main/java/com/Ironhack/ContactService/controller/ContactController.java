@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/contact")
+@RequestMapping("/crm/contact")
 public class ContactController {
 
     @Autowired
@@ -18,25 +19,25 @@ public class ContactController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Contact getById(@PathVariable("id") Long id) {
+    public ContactDTO getById(@PathVariable("id") Long id) {
         return contactService.getDTO(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Contact> getAll() {
+    public List<ContactDTO> getAll() {
         return contactService.getAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Contact create(@RequestBody ContactDTO transaction) {
+    public ContactDTO create(@RequestBody ContactDTO transaction) throws ParseException {
         return contactService.create(transaction);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Contact update(@PathVariable Long id, @RequestBody ContactDTO transaction) {
+    public ContactDTO update(@PathVariable Long id, @RequestBody ContactDTO transaction) {
         return contactService.update(id, transaction);
     }
 

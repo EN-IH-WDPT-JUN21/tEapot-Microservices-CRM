@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountDTO {
-
+    private Long id;
     private Industry industry;
     private int employeeCount;
     private String city;

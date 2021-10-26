@@ -4,11 +4,14 @@ import com.Ironhack.AccountService.dao.Account;
 import com.Ironhack.AccountService.dto.AccountDTO;
 import com.Ironhack.AccountService.dto.TransactionDTO;
 import com.Ironhack.AccountService.repository.AccountRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -16,58 +19,45 @@ public class AccountService {
     @Autowired
     AccountRepository accountRepository;
 
-    public Account create(TransactionDTO transactionDTO){
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public AccountDTO create(TransactionDTO transactionDTO) throws ParseException {
         AccountDTO accountDTO= transactionDTO.getAccountDTO();
-        Account account=new Account();
-        account.setIndustry(accountDTO.getIndustry());
-        account.setEmployeeCount(accountDTO.getEmployeeCount());
-        account.setCity(accountDTO.getCity());
-        account.setCountry(accountDTO.getCountry());
+        Account account=convertToEntity(accountDTO);
 
-        if(accountDTO.getOpportunities()==null || accountDTO.getOpportunities().isEmpty()) {
-            account.setOpportunities(new ArrayList<>());
-
-        }else{
-            account.setOpportunities(accountDTO.getOpportunities());
+        //add opportunity if provided in transaction and absent in accountDTO
+        if(transactionDTO.getOpportunityId()!=null) {
+            if(!account.getOpportunities().contains(transactionDTO.getOpportunityId())) {
+                account.getOpportunities().add(transactionDTO.getOpportunityId());
+            }
         }
-        account.getOpportunities().add(transactionDTO.getOpportunityId());
-
-        if(accountDTO.getContacts()==null || accountDTO.getContacts().isEmpty()){
-            account.setContacts(new ArrayList<>());
-        }else{
-            account.setContacts(accountDTO.getContacts());
+        //add contact if provided in transaction and absent in accountDTO
+        if(transactionDTO.getContactId()!=null) {
+            if(!account.getContacts().contains(transactionDTO.getContactId())) {
+                account.getContacts().add(transactionDTO.getContactId());
+            }
         }
-        account.getContacts().add(transactionDTO.getContactId());
 
-        return accountRepository.save(account);
+        accountDTO=convertToDto(accountRepository.save(account));
+        return accountDTO;
     }
 
-
+    public List<AccountDTO> getAll() {
+        List<Account> accounts = accountRepository.findAll();
+        return accounts.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 
     public AccountDTO getAccountDTO(Long id){
         if(accountRepository.findById(id).isEmpty()){
             return null;
         }else {
             Account account = accountRepository.findById(id).get();
-            AccountDTO accountDTO =new AccountDTO();
-            accountDTO.setIndustry(account.getIndustry());
-            accountDTO.setEmployeeCount(account.getEmployeeCount());
-            accountDTO.setCity(account.getCity());
-            accountDTO.setCountry(account.getCountry());
-            if(account.getOpportunities()==null || account.getOpportunities().isEmpty()) {
-                accountDTO.setOpportunities(new ArrayList<>());
-            }else{
-                accountDTO.setOpportunities(account.getOpportunities());
-            }
-            if(account.getContacts()==null || account.getContacts().isEmpty()){
-                accountDTO.setContacts(new ArrayList<>());
-            }else{
-                accountDTO.setContacts(account.getContacts());
-            }
-            return accountDTO;
+            return convertToDto(account);
         }
     }
-
 
     public void deleteAccount(Long id){
         if(accountRepository.findById(id).isPresent()){
@@ -75,12 +65,7 @@ public class AccountService {
         }
     }
 
-
-    public List<Account> getAllAccounts() {
-        return accountRepository.findAll();
-    }
-
-    public Account updateAccount(Long id, TransactionDTO transaction) {
+    public AccountDTO updateAccount(Long id, TransactionDTO transaction) {
         if(accountRepository.findById(id).isEmpty()){
             return null;
         }else {
@@ -93,8 +78,19 @@ public class AccountService {
             if(!account.getOpportunities().contains(opportunity)){
                 account.getOpportunities().add(opportunity);
             }
-            return accountRepository.save(account);
-        }
+            account=accountRepository.save(account);
+            return modelMapper.map(account, AccountDTO.class);
 
+        }
+    }
+
+    private AccountDTO convertToDto(Account account) {
+        AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
+        return accountDTO;
+    }
+
+    private Account convertToEntity(AccountDTO postDto) throws ParseException {
+        Account account = modelMapper.map(postDto, Account.class);
+        return account;
     }
 }

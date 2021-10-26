@@ -4,18 +4,21 @@ import com.Ironhack.AccountService.dao.Account;
 import com.Ironhack.AccountService.dto.AccountDTO;
 import com.Ironhack.AccountService.dto.TransactionDTO;
 import com.Ironhack.AccountService.service.AccountService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/crm/account")
 public class AccountController {
 
     @Autowired
     AccountService accountService;
+
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -25,19 +28,19 @@ public class AccountController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Account> getAll() {
-        return accountService.getAllAccounts();
+    public List<AccountDTO> getAll() {
+        return accountService.getAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Account create(@RequestBody TransactionDTO transaction) {
+    public AccountDTO create(@RequestBody TransactionDTO transaction) throws ParseException {
         return accountService.create(transaction);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Account update(@PathVariable Long id, @RequestBody TransactionDTO transaction) {
+    public AccountDTO update(@PathVariable Long id, @RequestBody TransactionDTO transaction) {
         return accountService.updateAccount(id, transaction);
     }
 

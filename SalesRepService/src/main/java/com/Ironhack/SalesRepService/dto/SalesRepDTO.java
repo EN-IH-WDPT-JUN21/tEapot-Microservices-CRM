@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SalesRepDTO {
-
+    private Long id;
     private String name;
 }
