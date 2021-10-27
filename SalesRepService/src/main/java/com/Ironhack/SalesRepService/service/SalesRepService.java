@@ -2,12 +2,14 @@ package com.Ironhack.SalesRepService.service;
 
 import com.Ironhack.SalesRepService.dao.SalesRep;
 import com.Ironhack.SalesRepService.dto.SalesRepDTO;
+import com.Ironhack.SalesRepService.dto.TransactionDTO;
 import com.Ironhack.SalesRepService.repository.SalesRepRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,8 +29,27 @@ public class SalesRepService {
                 .collect(Collectors.toList());
     }
 
-    public SalesRepDTO create(SalesRepDTO transaction) throws ParseException {
-        SalesRep salesRep=convertToEntity(transaction);
+    public SalesRepDTO create(TransactionDTO transactionDTO) throws ParseException {
+        SalesRep salesRep=convertToEntity(transactionDTO);
+        //add opportunity if provided in transaction and absent in accountDTO
+        if(salesRep.getOpportunities()==null) {
+            salesRep.setOpportunities(new ArrayList<>());
+        }
+        if(transactionDTO.getOpportunityId()!=null) {
+            if(!salesRep.getOpportunities().contains(transactionDTO.getOpportunityId())) {
+                salesRep.getOpportunities().add(transactionDTO.getOpportunityId());
+            }
+        }
+        //add contact if provided in transaction and absent in accountDTO
+        if(salesRep.getLeads()==null){
+            salesRep.setLeads(new ArrayList<>());
+        }
+        if(transactionDTO.getLeadId()!=null) {
+            if (!salesRep.getLeads().contains(transactionDTO.getLeadId())) {
+                salesRep.getLeads().add(transactionDTO.getLeadId());
+            }
+        }
+
         salesRep=salesRepRepository.save(salesRep);
         return convertToDto(salesRep);
     }
@@ -53,8 +74,8 @@ public class SalesRepService {
         return salesRepDTO;
     }
 
-    private SalesRep convertToEntity(SalesRepDTO salesRepDTO) throws ParseException {
-        SalesRep salesRep = modelMapper.map(salesRepDTO, SalesRep.class);
+    private SalesRep convertToEntity(TransactionDTO transactionDTO) throws ParseException {
+        SalesRep salesRep = modelMapper.map(transactionDTO, SalesRep.class);
         return salesRep;
     }
 

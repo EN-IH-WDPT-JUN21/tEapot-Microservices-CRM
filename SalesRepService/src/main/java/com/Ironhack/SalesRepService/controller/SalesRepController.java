@@ -2,6 +2,7 @@ package com.Ironhack.SalesRepService.controller;
 
 import com.Ironhack.SalesRepService.dao.SalesRep;
 import com.Ironhack.SalesRepService.dto.SalesRepDTO;
+import com.Ironhack.SalesRepService.dto.TransactionDTO;
 import com.Ironhack.SalesRepService.service.SalesRepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class SalesRepController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public SalesRepDTO create(@RequestBody SalesRepDTO transaction) throws ParseException {
+    public SalesRepDTO create(@RequestBody TransactionDTO transaction) throws ParseException {
         return salesRepService.create(transaction);
     }
     

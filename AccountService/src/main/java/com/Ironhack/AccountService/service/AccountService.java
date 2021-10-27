@@ -22,26 +22,33 @@ public class AccountService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public AccountDTO create(TransactionDTO transactionDTO) throws ParseException {
-        AccountDTO accountDTO= transactionDTO.getAccountDTO();
-        Account account=convertToEntity(accountDTO);
+
+        public AccountDTO create(TransactionDTO transactionDTO) throws ParseException {
+        Account account=convertToEntity(transactionDTO);
 
         //add opportunity if provided in transaction and absent in accountDTO
+        if(account.getOpportunities()==null) {
+            account.setOpportunities(new ArrayList<>());
+        }
         if(transactionDTO.getOpportunityId()!=null) {
             if(!account.getOpportunities().contains(transactionDTO.getOpportunityId())) {
                 account.getOpportunities().add(transactionDTO.getOpportunityId());
             }
         }
         //add contact if provided in transaction and absent in accountDTO
+        if(account.getContacts()==null){
+            account.setContacts(new ArrayList<>());
+        }
         if(transactionDTO.getContactId()!=null) {
-            if(!account.getContacts().contains(transactionDTO.getContactId())) {
+            if (!account.getContacts().contains(transactionDTO.getContactId())) {
                 account.getContacts().add(transactionDTO.getContactId());
             }
         }
-
-        accountDTO=convertToDto(accountRepository.save(account));
-        return accountDTO;
+        account = accountRepository.save(account);
+        return convertToDto(account);
     }
+
+
 
     public List<AccountDTO> getAll() {
         List<Account> accounts = accountRepository.findAll();
@@ -84,12 +91,12 @@ public class AccountService {
         }
     }
 
-    private AccountDTO convertToDto(Account account) {
+    public AccountDTO convertToDto(Account account) {
         AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
         return accountDTO;
     }
 
-    private Account convertToEntity(AccountDTO postDto) throws ParseException {
+    public Account convertToEntity(TransactionDTO postDto) throws ParseException {
         Account account = modelMapper.map(postDto, Account.class);
         return account;
     }

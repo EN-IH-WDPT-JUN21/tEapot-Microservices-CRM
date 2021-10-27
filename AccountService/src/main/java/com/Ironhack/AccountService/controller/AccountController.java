@@ -1,10 +1,8 @@
 package com.Ironhack.AccountService.controller;
 
-import com.Ironhack.AccountService.dao.Account;
 import com.Ironhack.AccountService.dto.AccountDTO;
 import com.Ironhack.AccountService.dto.TransactionDTO;
 import com.Ironhack.AccountService.service.AccountService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
