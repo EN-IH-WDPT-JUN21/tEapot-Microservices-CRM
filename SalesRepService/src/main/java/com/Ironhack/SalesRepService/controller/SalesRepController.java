@@ -1,6 +1,5 @@
 package com.Ironhack.SalesRepService.controller;
 
-import com.Ironhack.SalesRepService.dao.SalesRep;
 import com.Ironhack.SalesRepService.dto.SalesRepDTO;
 import com.Ironhack.SalesRepService.dto.TransactionDTO;
 import com.Ironhack.SalesRepService.service.SalesRepService;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -31,7 +29,7 @@ public class SalesRepController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public SalesRepDTO create(@RequestBody TransactionDTO transaction) throws ParseException {
+    public SalesRepDTO create(@RequestBody TransactionDTO transaction){
         return salesRepService.create(transaction);
     }
     
@@ -39,5 +37,11 @@ public class SalesRepController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long id) {
         salesRepService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public SalesRepDTO update(@PathVariable Long id, @RequestBody TransactionDTO transaction) {
+        return salesRepService.update(id, transaction);
     }
 }
