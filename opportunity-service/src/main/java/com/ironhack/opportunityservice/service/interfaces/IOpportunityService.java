@@ -3,13 +3,19 @@ package com.ironhack.opportunityservice.service.interfaces;
 import com.ironhack.opportunityservice.dto.ConversionReceipt;
 import com.ironhack.opportunityservice.dto.ConvertRequest;
 import com.ironhack.opportunityservice.dto.OpportunityDTO;
+import com.ironhack.opportunityservice.enums.Product;
+import com.ironhack.opportunityservice.enums.Status;
 
 import java.util.List;
 
 public interface IOpportunityService {
-    public List<OpportunityDTO> getOpportunities(Long id);
+    List<OpportunityDTO> getOpportunities(Long id);
 
-    public ConversionReceipt convertLead(Long id, ConvertRequest convertRequest);
+    ConversionReceipt convertLead(Long id, ConvertRequest convertRequest);
 
-    public void deleteOpportunity(Long id);
+    void deleteOpportunity(Long id);
+
+    OpportunityDTO updateStatus(Long id, Status status);
+
+    List<OpportunityDTO> getByStatusAndProduct(Status status, Product product);
 }

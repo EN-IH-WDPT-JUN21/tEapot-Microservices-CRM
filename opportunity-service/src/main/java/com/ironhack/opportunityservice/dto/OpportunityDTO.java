@@ -20,7 +20,6 @@ public class OpportunityDTO {
     private Product product;
     private int quantity;
     private Long decisionMakerId;
-    private Long salesRepId;
 
     public OpportunityDTO(Opportunity opportunity) {
         setId(opportunity.getId());

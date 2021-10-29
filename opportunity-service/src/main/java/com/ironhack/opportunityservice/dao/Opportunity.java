@@ -24,15 +24,13 @@ public class Opportunity {
     private Product product;
     private int quantity;
     private Long decisionMakerId;
-    private Long salesRepId;
 
 
-    public Opportunity(OpportunityDTO opportunityDTO, Long decisionMakerId, Long salesRepId) {
+    public Opportunity(OpportunityDTO opportunityDTO, Long decisionMakerId) {
         status = Status.OPEN;
         setProduct(opportunityDTO.getProduct());
         setQuantity(opportunityDTO.getQuantity());
         setDecisionMakerId(decisionMakerId);
-        setSalesRepId(salesRepId);
     }
 
     // TODO - delete if not needed
