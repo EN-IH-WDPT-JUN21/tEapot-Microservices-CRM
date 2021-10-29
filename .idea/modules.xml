@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AccountService/AccountService.iml" filepath="$PROJECT_DIR$/AccountService/AccountService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ContactService/ContactService.iml" filepath="$PROJECT_DIR$/ContactService/ContactService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LeadService/LeadService.iml" filepath="$PROJECT_DIR$/LeadService/LeadService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SalesRepService/SalesRepService.iml" filepath="$PROJECT_DIR$/SalesRepService/SalesRepService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Server/Server.iml" filepath="$PROJECT_DIR$/Server/Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tEapot-Microservices-CRM.iml" filepath="$PROJECT_DIR$/.idea/tEapot-Microservices-CRM.iml" />
+    </modules>
+  </component>
+</project>
