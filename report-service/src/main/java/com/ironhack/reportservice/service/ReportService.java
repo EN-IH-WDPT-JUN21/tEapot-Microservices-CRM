@@ -9,6 +9,7 @@ import com.ironhack.reportservice.enums.Status;
 import com.ironhack.reportservice.proxy.AccountServiceProxy;
 import com.ironhack.reportservice.proxy.OpportunityServiceProxy;
 import com.ironhack.reportservice.proxy.SalesrepServiceProxy;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +68,6 @@ public class ReportService {
                     reportDTO.setValue(opportunityServiceProxy.getOpportunityBySalesRepIdForStatus(salesRepDTO.getId(), Status.CLOSED_WON.toString()).size());
                     reportOutput.add(reportDTO);
                 }
-
                 break;
 
             //Get number of opportunities with CLOSE-LOST status by sales representative
@@ -137,54 +137,236 @@ public class ReportService {
 
             //Get number of opportunities by country
             case REPORT_OPP_BY_COUNTRY:
-
+                Map<String, List<AccountDTO>> oppsByCountry =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getCountry()));
+                for (String key : oppsByCountry.keySet()) {
+                    List<AccountDTO> value = oppsByCountry.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        oppNumber += accountDTO.getOpportunities().size();
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with CLOSE-WON status by country
             case REPORT_CLOSE_W_BY_COUNTRY:
-
+                Map<String, List<AccountDTO>> oppsWByCountry =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getCountry()));
+                for (String key : oppsWByCountry.keySet()) {
+                    List<AccountDTO> value = oppsWByCountry.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        List<Long> oppsByAcc = accountDTO.getOpportunities();
+                        for(Long oppId: oppsByAcc){
+                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_WON){
+                                oppNumber += 1;
+                            }
+                            oppNumber= oppNumber;
+                        }
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with CLOSE-LOST status by country
             case REPORT_CLOSE_L_BY_COUNTRY:
+                Map<String, List<AccountDTO>> oppsLByCountry =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getCountry()));
+                for (String key : oppsLByCountry.keySet()) {
+                    List<AccountDTO> value = oppsLByCountry.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        List<Long> oppsByAcc = accountDTO.getOpportunities();
+                        for(Long oppId: oppsByAcc){
+                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_LOST){
+                                oppNumber += 1;
+                            }
+                            oppNumber= oppNumber;
+                        }
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with OPEN status by country
             case REPORT_OPEN_BY_COUNTRY:
+                Map<String, List<AccountDTO>> oppsOByCountry =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getCountry()));
+                for (String key : oppsOByCountry.keySet()) {
+                    List<AccountDTO> value = oppsOByCountry.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        List<Long> oppsByAcc = accountDTO.getOpportunities();
+                        for(Long oppId: oppsByAcc){
+                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.OPEN){
+                                oppNumber += 1;
+                            }
+                            oppNumber= oppNumber;
+                        }
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with by city
             case REPORT_OPP_BY_CITY:
-
+                Map<String, List<AccountDTO>> oppsByCity =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getCity()));
+                for (String key : oppsByCity.keySet()) {
+                    List<AccountDTO> value = oppsByCity.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        oppNumber += accountDTO.getOpportunities().size();
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with CLOSE-WON status by city
             case REPORT_CLOSE_W_BY_CITY:
+                Map<String, List<AccountDTO>> oppsWByCity =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getCity()));
+                for (String key : oppsWByCity.keySet()) {
+                    List<AccountDTO> value = oppsWByCity.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        List<Long> oppsByAcc = accountDTO.getOpportunities();
+                        for(Long oppId: oppsByAcc){
+                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_WON){
+                                oppNumber += 1;
+                            }
+                            oppNumber= oppNumber;
+                        }
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with CLOSE-LOST status by city
             case REPORT_CLOSE_L_BY_CITY:
+                Map<String, List<AccountDTO>> oppsLByCity =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getCity()));
+                for (String key : oppsLByCity.keySet()) {
+                    List<AccountDTO> value = oppsLByCity.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        List<Long> oppsByAcc = accountDTO.getOpportunities();
+                        for(Long oppId: oppsByAcc){
+                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_LOST){
+                                oppNumber += 1;
+                            }
+                            oppNumber= oppNumber;
+                        }
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with OPEN status by city
             case REPORT_OPEN_BY_CITY:
+                Map<String, List<AccountDTO>> oppsOByCity =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getCity()));
+                for (String key : oppsOByCity.keySet()) {
+                    List<AccountDTO> value = oppsOByCity.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        List<Long> oppsByAcc = accountDTO.getOpportunities();
+                        for(Long oppId: oppsByAcc){
+                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.OPEN){
+                                oppNumber += 1;
+                            }
+                            oppNumber= oppNumber;
+                        }
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with by industry
             case REPORT_OPP_BY_INDUSTRY:
-
+                Map<String, List<AccountDTO>> oppsByIndustry =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getIndustry()));
+                for (String key : oppsByIndustry.keySet()) {
+                    List<AccountDTO> value = oppsByIndustry.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        oppNumber += accountDTO.getOpportunities().size();
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with CLOSE-WON status by industry
             case REPORT_CLOSE_W_BY_INDUSTRY:
+                Map<String, List<AccountDTO>> oppsWByIndustry =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getIndustry()));
+                for (String key : oppsWByIndustry.keySet()) {
+                    List<AccountDTO> value = oppsWByIndustry.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        List<Long> oppsByAcc = accountDTO.getOpportunities();
+                        for(Long oppId: oppsByAcc){
+                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_WON){
+                                oppNumber += 1;
+                            }
+                            oppNumber= oppNumber;
+                        }
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with CLOSE-LOST status by industry
             case REPORT_CLOSE_L_BY_INDUSTRY:
+                Map<String, List<AccountDTO>> oppsLByIndustry =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getIndustry()));
+                for (String key : oppsLByIndustry.keySet()) {
+                    List<AccountDTO> value = oppsLByIndustry.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        List<Long> oppsByAcc = accountDTO.getOpportunities();
+                        for(Long oppId: oppsByAcc){
+                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_LOST){
+                                oppNumber += 1;
+                            }
+                            oppNumber= oppNumber;
+                        }
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get number of opportunities with OPEN status by industry
             case REPORT_OPEN_BY_INDUSTRY:
+                Map<String, List<AccountDTO>> oppsOByIndustry =
+                        accounts.stream().collect(Collectors.groupingBy(w -> w.getIndustry()));
+                for (String key : oppsOByIndustry.keySet()) {
+                    List<AccountDTO> value = oppsOByIndustry.get(key);
+                    reportDTO.setLabel(key);
+                    int oppNumber = 0;
+                    for (AccountDTO accountDTO : value) {
+                        List<Long> oppsByAcc = accountDTO.getOpportunities();
+                        for(Long oppId: oppsByAcc){
+                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.OPEN){
+                                oppNumber += 1;
+                            }
+                            oppNumber= oppNumber;
+                        }
+                    }
+                    reportDTO.setValue(oppNumber);
+                }
                 break;
 
             //Get average value of employees
@@ -307,8 +489,8 @@ public class ReportService {
                 reportDTO.setValue(getMin(minOpps));
                 break;
             default:
-                reportDTO.setLabel("Reports found: ");
-                reportDTO.setValue(0);
+                reportDTO.setLabel("The answer to everything is: ");
+                reportDTO.setValue(42);
                 reportOutput.add(reportDTO);
         }
         return reportOutput;

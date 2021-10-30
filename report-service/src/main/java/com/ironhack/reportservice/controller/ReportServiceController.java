@@ -22,7 +22,7 @@ public class ReportServiceController {
     }
 
     @GetMapping("/{command}")
-    @Retry(name = "salesrep-service", fallbackMethod = "getReportFallback") //currently not sure how to apply to multiple services
+    @Retry(name = "", fallbackMethod = "getReportFallback") //currently not sure how to apply to multiple services, do I need to reference a service?
     public List<ReportDTO> getReportByType(@PathVariable(name = "command") String command){
         return reportService.getReport(command);
     }
