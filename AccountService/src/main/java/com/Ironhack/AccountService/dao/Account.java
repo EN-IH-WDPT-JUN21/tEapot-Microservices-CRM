@@ -34,11 +34,11 @@ public class Account {
     private String country;
     @ElementCollection
     @LazyCollection(LazyCollectionOption.FALSE)
-    @NonNull
+    @NotNull
     private List<Long> opportunities;
     @ElementCollection
     @LazyCollection(LazyCollectionOption.FALSE)
-    @NonNull
+    @NotNull
     private List<Long> contacts;
 
 }

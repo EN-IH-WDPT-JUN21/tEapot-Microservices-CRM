@@ -2,9 +2,12 @@ package com.Ironhack.SalesRepService.dao;
 
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -21,4 +24,15 @@ public class SalesRep {
 
     @NotNull
     private String name;
+
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @NotNull
+    private List<Long> leads;
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @NotNull
+    private List<Long> opportunities;
+
+
 }

@@ -1,5 +1,6 @@
 package com.Ironhack.AccountService.dto;
 
+import com.Ironhack.AccountService.enums.Industry;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TransactionDTO {
 
-    private AccountDTO accountDTO;
+    private Long id;
+    private Industry industry;
+    private int employeeCount;
+    private String city;
+    private String country;
     private Long opportunityId;
     private Long contactId;
 
