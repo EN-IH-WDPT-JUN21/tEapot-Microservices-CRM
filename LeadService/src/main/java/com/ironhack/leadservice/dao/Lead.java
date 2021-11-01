@@ -31,7 +31,7 @@ public class Lead {
     private String email;
     private Long salesRepId;
 
-    public Lead(String name, String phoneNumber, String companyName, String email, Long salesRepId) {
+    public Lead(String name, String phoneNumber, String email, String companyName, Long salesRepId) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.companyName = companyName;

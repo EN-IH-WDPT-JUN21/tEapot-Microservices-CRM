@@ -7,6 +7,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,4 +36,9 @@ public class SalesRep {
     private List<Long> opportunities;
 
 
+    public SalesRep(String name, ArrayList leads, ArrayList opportunities) {
+        this.name=name;
+        this.leads=leads;
+        this.opportunities=opportunities;
+    }
 }

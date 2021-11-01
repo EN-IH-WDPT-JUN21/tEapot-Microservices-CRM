@@ -41,4 +41,12 @@ public class Account {
     @NotNull
     private List<Long> contacts;
 
+    public Account(String city, String country, int employeeCount, Industry industry, List opportunities, List contacts) {
+        this.city=city;
+        this.country=country;
+        this.employeeCount=employeeCount;
+        this.industry=industry;
+        this.opportunities=opportunities;
+        this.contacts=contacts;
+    }
 }

@@ -1,10 +1,15 @@
 package com.ironhack.leadservice;
 
+import com.ironhack.leadservice.dao.Lead;
+import com.ironhack.leadservice.repository.LeadRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -15,6 +20,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringBootApplication
@@ -36,5 +42,29 @@ public class LeadServiceApplication {
 				.apis(RequestHandlerSelectors.basePackage("com.ironhack.leadservice.controller"))
 				.paths(PathSelectors.any())
 				.build();
+	}
+
+	@Component
+	public class SampleDataLoader implements CommandLineRunner {
+		@Autowired
+		LeadRepository leadRepository;
+		@Override
+		public void run(String... args) throws Exception {
+			leadRepository.saveAll(List.of(
+							new Lead("Oleg Smart", "158158158", "Osmanrt@example.com", "Smart Solutions", 1L),
+							new Lead("Adam Biggs", "200200200", "abiggs@example.com", "BigBiggs", 1L),
+							new Lead("Cedric Coleman", "300300300", "ccoleman@example.com", "Cedar Coleman", 1L),
+							new Lead("Daniel Dibbs", "458789546", "ddibbs@example.com", "Dibb IT", 2L),
+
+							new Lead("Eric Edelmann", "532578990", "eedelmann@example.com", "ElderMan", 2L),
+							new Lead("Ferdinand Frog", "121312122", "ffrog@example.com", "Smily Frog", 2L),
+							new Lead("Greg Goll", "321321321", "ggoll@example.com", "Goll", 2L),
+
+							new Lead("Henry Hickman", "432432432", "hhickmann@example.com", "Hickory", 3L),
+							new Lead("Izabella Ichtmann", "543543543", "iichtmann@example.com", "Ichtiology Tech", 3L),
+							new Lead("Jenny Jones", "654654654", "jjones@example.com", "Jones&Jones", 3L)
+					)
+			);
+		}
 	}
 }

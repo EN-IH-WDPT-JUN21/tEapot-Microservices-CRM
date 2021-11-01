@@ -34,6 +34,14 @@ public class Opportunity {
         setDecisionMakerId(decisionMakerId);
     }
 
+    public Opportunity(Status status, Product product, int quantity, long decisionMakerId, long salesRepId) {
+        this.status=status;
+        this.product=product;
+        this.quantity=quantity;
+        this.decisionMakerId=decisionMakerId;
+        this.salesRepId=salesRepId;
+    }
+
     // TODO - delete if not needed
 /*    public String showOpportunityDetails() {
         String str = "Opportunity details: ".concat("\n")

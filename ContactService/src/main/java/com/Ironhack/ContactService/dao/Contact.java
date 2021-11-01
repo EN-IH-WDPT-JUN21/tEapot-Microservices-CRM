@@ -20,4 +20,10 @@ public class Contact {
     private String email;
     private String companyName;
 
+    public Contact(String name, String phoneNumber, String email, String companyName) {
+        this.name=name;
+        this.phoneNumber=phoneNumber;
+        this.email=email;
+        this.companyName=companyName;
+    }
 }
