@@ -65,7 +65,7 @@ public class ReportService {
             case REPORT_CLOSE_W_BY_SALESREP:
                 for (SalesRepDTO salesRepDTO : salesreps){
                     reportDTO.setLabel(salesRepDTO.getRepName());
-                    reportDTO.setValue(opportunityServiceProxy.getOpportunityBySalesRepIdForStatus(salesRepDTO.getId(), Status.CLOSED_WON.toString()).size());
+                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.CLOSED_WON, salesRepDTO.getId()).size());
                     reportOutput.add(reportDTO);
                 }
                 break;
@@ -74,7 +74,7 @@ public class ReportService {
             case REPORT_CLOSE_L_BY_SALESREP:
                 for (SalesRepDTO salesRepDTO : salesreps){
                     reportDTO.setLabel(salesRepDTO.getRepName());
-                    reportDTO.setValue(opportunityServiceProxy.getOpportunityBySalesRepIdForStatus(salesRepDTO.getId(), Status.CLOSED_LOST.toString()).size());
+                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.CLOSED_LOST, salesRepDTO.getId()).size());
                     reportOutput.add(reportDTO);
                 }
                 break;
@@ -83,7 +83,7 @@ public class ReportService {
             case REPORT_OPEN_BY_SALESREP:
                 for (SalesRepDTO salesRepDTO : salesreps){
                     reportDTO.setLabel(salesRepDTO.getRepName());
-                    reportDTO.setValue(opportunityServiceProxy.getOpportunityBySalesRepIdForStatus(salesRepDTO.getId(), Status.OPEN.toString()).size());
+                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.OPEN, salesRepDTO.getId()).size());
                     reportOutput.add(reportDTO);
                 }
                 break;
