@@ -499,15 +499,16 @@ public class ReportService {
     //**** UTIL METHODS ****
 
     //method to find median in an array
-    public double getMedian(List<Integer> medianNums){
-        medianNums = new ArrayList<>();
-        Collections.sort(medianNums);
-        double median;
-        if (medianNums.size()%2 == 1) {
-            median = medianNums.size()/2 + (medianNums.size()/2 - 1)/2;
+    public double getMedian(List<Integer> medianNums) {
+        List<Integer> sortedList = medianNums.stream().sorted().collect(Collectors.toList());
+        if (medianNums.size() % 2 == 1)
+            return sortedList.get((medianNums.size() + 1) / 2 - 1).doubleValue();
+        else {
+            double lower = sortedList.get(medianNums.size() / 2 - 1).doubleValue();
+            double upper = sortedList.get(medianNums.size() / 2).doubleValue();
+
+            return (lower + upper) / 2.0;
         }
-            median = medianNums.size()/2;
-        return median;
     }
 
     //method to find maximum in an array
@@ -522,11 +523,11 @@ public class ReportService {
 
     //method to find average in an array
     public double getAvg(List<Integer> nums){
-        nums = new ArrayList<>();
-        int sum = 0;
-        for(int i = 0; i < nums.size(); i++)
-            sum += nums.get(i);
-        return sum/nums.size();
+        Integer sum = 0;
+        for(Integer i: nums) {
+            sum += i;
+        }
+        return sum.doubleValue()/ nums.size();
     }
 
 }
