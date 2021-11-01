@@ -9,7 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/Server/Server.iml" filepath="$PROJECT_DIR$/Server/Server.iml" />
       <module fileurl="file://$PROJECT_DIR$/opportunity-service/opportunity-service.iml" filepath="$PROJECT_DIR$/opportunity-service/opportunity-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-service/report-service.iml" filepath="$PROJECT_DIR$/report-service/report-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/tEapot-Microservices-CRM_with lead.iml" filepath="$PROJECT_DIR$/.idea/tEapot-Microservices-CRM_with lead.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tEapot-Microservices-CRM_all.iml" filepath="$PROJECT_DIR$/.idea/tEapot-Microservices-CRM_all.iml" />
     </modules>
   </component>
 </project>

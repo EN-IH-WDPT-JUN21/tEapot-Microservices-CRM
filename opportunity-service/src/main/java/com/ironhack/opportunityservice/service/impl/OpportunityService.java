@@ -22,6 +22,7 @@ import java.util.Optional;
 @Service
 public class OpportunityService implements IOpportunityService {
 
+
     private final LeadProxy leadProxy;
     private final ContactProxy contactProxy;
     private final AccountProxy accountProxy;
@@ -39,8 +40,8 @@ public class OpportunityService implements IOpportunityService {
 
     public List<OpportunityDTO> getOpportunities() {
         List<OpportunityDTO> opportunityDTOS = new ArrayList<>();
-        var opportunities =  opportunityRepository.findAll();
-        for(Opportunity opp: opportunities){
+        var opportunities = opportunityRepository.findAll();
+        for (Opportunity opp : opportunities) {
             OpportunityDTO opportunityDTO = getOpp(opp);
             opportunityDTOS.add(opportunityDTO);
         }
@@ -49,7 +50,7 @@ public class OpportunityService implements IOpportunityService {
 
     public OpportunityDTO getById(Long id) {
         Optional<Opportunity> opportunity = opportunityRepository.findById(id);
-        if(opportunity.isPresent()){
+        if (opportunity.isPresent()) {
             return getOpp(opportunity.get());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no Opportunity with id " + id);
@@ -131,7 +132,7 @@ public class OpportunityService implements IOpportunityService {
     public List<OpportunityDTO> getByStatusAndSalesrepId(Status status, Long salesRepId) {
         List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
         if (status != null && salesRepId != null) {
-            List<Opportunity> opportunityList = opportunityRepository.findByStatusAndSalesrepId(status, salesRepId);
+            List<Opportunity> opportunityList = opportunityRepository.findByStatusAndSalesRepId(status, salesRepId);
             for (Opportunity opportunity : opportunityList) {
                 opportunityDTOList.add(getOpp(opportunity));
             }
@@ -160,3 +161,4 @@ public class OpportunityService implements IOpportunityService {
         return opportunityDTO;
     }
 }
+

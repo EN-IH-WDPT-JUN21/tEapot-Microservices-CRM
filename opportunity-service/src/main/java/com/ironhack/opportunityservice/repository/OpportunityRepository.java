@@ -13,5 +13,5 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     List<Opportunity> findByStatusAndProduct(Status status, Product product);
     List<Opportunity> findByProduct(Product product);
     List<Opportunity> findByStatus(Status status);
-    List<Opportunity> findByStatusAndSalesrepId(Status status, Long id);
+    List<Opportunity> findByStatusAndSalesRepId(Status status, Long id);
 }
