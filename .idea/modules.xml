@@ -7,7 +7,9 @@
       <module fileurl="file://$PROJECT_DIR$/LeadService/LeadService.iml" filepath="$PROJECT_DIR$/LeadService/LeadService.iml" />
       <module fileurl="file://$PROJECT_DIR$/SalesRepService/SalesRepService.iml" filepath="$PROJECT_DIR$/SalesRepService/SalesRepService.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/Server.iml" filepath="$PROJECT_DIR$/Server/Server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/tEapot-Microservices-CRM.iml" filepath="$PROJECT_DIR$/.idea/tEapot-Microservices-CRM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/opportunity-service/opportunity-service.iml" filepath="$PROJECT_DIR$/opportunity-service/opportunity-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report-service/report-service.iml" filepath="$PROJECT_DIR$/report-service/report-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tEapot-Microservices-CRM_with lead.iml" filepath="$PROJECT_DIR$/.idea/tEapot-Microservices-CRM_with lead.iml" />
     </modules>
   </component>
 </project>

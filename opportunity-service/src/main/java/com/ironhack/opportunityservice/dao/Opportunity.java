@@ -24,6 +24,7 @@ public class Opportunity {
     private Product product;
     private int quantity;
     private Long decisionMakerId;
+    private Long salesRepId;
 
 
     public Opportunity(OpportunityDTO opportunityDTO, Long decisionMakerId) {

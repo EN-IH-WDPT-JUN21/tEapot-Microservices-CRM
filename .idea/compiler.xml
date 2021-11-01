@@ -7,17 +7,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SalesRepService" />
-        <module name="Server" />
         <module name="ContactService" />
-        <module name="AccountService" />
+        <module name="Server" />
         <module name="LeadService" />
+        <module name="SalesRepService" />
+        <module name="report-service" />
+        <module name="AccountService" />
+        <module name="opportunity-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="AccountService" target="17" />
       <module name="ContactService" target="17" />
       <module name="LeadService" target="17" />
+      <module name="opportunity-service" target="17" />
+      <module name="report-service" target="17" />
       <module name="SalesRepService" target="17" />
       <module name="Server" target="17" />
     </bytecodeTargetLevel>
@@ -29,6 +33,8 @@
       <module name="LeadService" options="-parameters" />
       <module name="SalesRepService" options="-parameters" />
       <module name="Server" options="-parameters" />
+      <module name="opportunity-service" options="-parameters" />
+      <module name="report-service" options="-parameters" />
     </option>
   </component>
 </project>
