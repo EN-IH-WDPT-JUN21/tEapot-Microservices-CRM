@@ -15,4 +15,5 @@ public interface IOpportunityController {
     void deleteOpportunity(Long id);
     OpportunityDTO updateStatus(Long id, Status status);
     List<OpportunityDTO> getByStatusAndProduct(Status status, Product product);
+    List<OpportunityDTO> getByStatusAndSalesrepId(Status status, Long salesRepId);
 }

@@ -128,6 +128,27 @@ public class OpportunityService implements IOpportunityService {
         return opportunityDTOList;
     }
 
+    public List<OpportunityDTO> getByStatusAndSalesrepId(Status status, Long salesRepId) {
+        List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
+        if (status != null && salesRepId != null) {
+            List<Opportunity> opportunityList = opportunityRepository.findByStatusAndSalesrepId(status, salesRepId);
+            for (Opportunity opportunity : opportunityList) {
+                opportunityDTOList.add(getOpp(opportunity));
+            }
+        } else if (status != null) {
+            List<Opportunity> opportunityList = opportunityRepository.findByStatus(status);
+            for (Opportunity opportunity : opportunityList) {
+                opportunityDTOList.add(getOpp(opportunity));
+            }
+        } else {
+            List<Opportunity> opportunityList = opportunityRepository.findAll();
+            for (Opportunity opportunity : opportunityList) {
+                opportunityDTOList.add(getOpp(opportunity));
+            }
+        }
+        return opportunityDTOList;
+    }
+
     public OpportunityDTO getOpp(Opportunity opportunity) {
         OpportunityDTO opportunityDTO = new OpportunityDTO();
         opportunityDTO.setId(opportunity.getId());

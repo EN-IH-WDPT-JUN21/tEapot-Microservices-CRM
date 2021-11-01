@@ -1,6 +1,7 @@
 package com.ironhack.reportservice.proxy;
 
 import com.ironhack.reportservice.DTO.OpportunityDTO;
+import com.ironhack.reportservice.enums.Status;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ public interface OpportunityServiceProxy {
     OpportunityDTO getOpportunityById(@PathVariable Long id);
 
     @GetMapping("/crm/opportunitysales")
-    List<OpportunityDTO> getOpportunityBySalesRepIdForStatus(@RequestParam Long salesrepId, @RequestParam String status);
+    List<OpportunityDTO> getByStatusAndSalesrepId(@RequestParam("status") Status status, @RequestParam("salesreId")Long salesrepId);
 
 
 }

@@ -52,4 +52,9 @@ public class OpportunityController implements IOpportunityController {
     public List<OpportunityDTO> getByStatusAndProduct(@RequestParam("status") Status status, @RequestParam("product")Product product){
         return opportunityService.getByStatusAndProduct(status, product);
     }
+
+    @GetMapping("/opportunitysales")
+    public List<OpportunityDTO> getByStatusAndSalesrepId(@RequestParam("status") Status status, @RequestParam("salesreId")Long salesrepId){
+        return opportunityService.getByStatusAndSalesrepId(status, salesrepId);
+    }
 }

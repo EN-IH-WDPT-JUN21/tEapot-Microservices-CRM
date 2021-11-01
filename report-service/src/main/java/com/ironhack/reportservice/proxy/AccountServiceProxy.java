@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient("account-service")
+@FeignClient("ACCOUNT-SERVICE")
 public interface AccountServiceProxy {
 
     @GetMapping("/crm/account/{id}")
