@@ -20,10 +20,16 @@ public class OpportunityController implements IOpportunityController {
     @Autowired
     IOpportunityService opportunityService;
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<OpportunityDTO> getOpportunities() {
+        return opportunityService.getOpportunities();
+    }
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<OpportunityDTO> getOpportunities(@PathVariable("id") Long id) {
-        return opportunityService.getOpportunities(id);
+    public OpportunityDTO getById(@PathVariable("id") Long id) {
+        return opportunityService.getById(id);
     }
 
     @PostMapping("/{account-id}")

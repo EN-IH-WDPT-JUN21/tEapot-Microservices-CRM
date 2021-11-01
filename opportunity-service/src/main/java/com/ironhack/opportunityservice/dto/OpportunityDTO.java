@@ -21,13 +21,4 @@ public class OpportunityDTO {
     private int quantity;
     private Long decisionMakerId;
     private Long salesRepId;
-
-    public OpportunityDTO(Opportunity opportunity) {
-        setId(opportunity.getId());
-        setProduct(opportunity.getProduct());
-        setQuantity(opportunity.getQuantity());
-        setStatus(opportunity.getStatus());
-        setDecisionMakerId(opportunity.getDecisionMakerId());
-        setSalesRepId(opportunity.getSalesRepId());
-    }
 }

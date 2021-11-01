@@ -37,23 +37,24 @@ public class OpportunityService implements IOpportunityService {
         this.opportunityRepository = opportunityRepository;
     }
 
-    public List<OpportunityDTO> getOpportunities(Long id) {
-        if (id != null) {
-            Optional<Opportunity>  opportunity = opportunityRepository.findById(id);
-            if (opportunity.isPresent()) {
-                return List.of(new OpportunityDTO(opportunity.get()));
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no Opportunity with id " + id);
-            }
-        } else {
-            List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
-            for (Opportunity opportunity : opportunityRepository.findAll()) {
-                opportunityDTOList.add(new OpportunityDTO(opportunity));
-            }
-            return opportunityDTOList;
+    public List<OpportunityDTO> getOpportunities() {
+        List<OpportunityDTO> opportunityDTOS = new ArrayList<>();
+        var opportunities =  opportunityRepository.findAll();
+        for(Opportunity opp: opportunities){
+            OpportunityDTO opportunityDTO = getOpp(opp);
+            opportunityDTOS.add(opportunityDTO);
         }
+        return opportunityDTOS;
     }
 
+    public OpportunityDTO getById(Long id) {
+        Optional<Opportunity> opportunity = opportunityRepository.findById(id);
+        if(opportunity.isPresent()){
+            return getOpp(opportunity.get());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no Opportunity with id " + id);
+        }
+    }
 
     public ConversionReceipt convertLead(Long accountId, ConvertRequest convertRequest) {
         LeadDTO lead = leadProxy.deleteLead(convertRequest.getLeadId());
@@ -80,7 +81,7 @@ public class OpportunityService implements IOpportunityService {
             account = accountProxy.updateAccount(accountId, accountRequest);
         }
 
-        ConversionReceipt conversionReceipt = new ConversionReceipt(convertRequest.getLeadId(), contact, new OpportunityDTO(opportunity), account);
+        ConversionReceipt conversionReceipt = new ConversionReceipt(convertRequest.getLeadId(), contact, getOpp(opportunity), account);
         return conversionReceipt;
     }
 
@@ -95,7 +96,7 @@ public class OpportunityService implements IOpportunityService {
         Optional<Opportunity> opportunity = opportunityRepository.findById(id);
         if (opportunity.isPresent()) {
             opportunity.get().setStatus(status);
-            return new OpportunityDTO(opportunity.get());
+            return getOpp(opportunity.get());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no Opportunity with id " + id);
         }
@@ -106,24 +107,35 @@ public class OpportunityService implements IOpportunityService {
         if (status != null && product != null) {
             List<Opportunity> opportunityList = opportunityRepository.findByStatusAndProduct(status, product);
             for (Opportunity opportunity : opportunityList) {
-                opportunityDTOList.add(new OpportunityDTO(opportunity));
+                opportunityDTOList.add(getOpp(opportunity));
             }
         } else if (status == null && product != null) {
             List<Opportunity> opportunityList = opportunityRepository.findByProduct(product);
             for (Opportunity opportunity : opportunityList) {
-                opportunityDTOList.add(new OpportunityDTO(opportunity));
+                opportunityDTOList.add(getOpp(opportunity));
             }
         } else if (status != null) {
             List<Opportunity> opportunityList = opportunityRepository.findByStatus(status);
             for (Opportunity opportunity : opportunityList) {
-                opportunityDTOList.add(new OpportunityDTO(opportunity));
+                opportunityDTOList.add(getOpp(opportunity));
             }
         } else {
             List<Opportunity> opportunityList = opportunityRepository.findAll();
             for (Opportunity opportunity : opportunityList) {
-                opportunityDTOList.add(new OpportunityDTO(opportunity));
+                opportunityDTOList.add(getOpp(opportunity));
             }
         }
         return opportunityDTOList;
+    }
+
+    public OpportunityDTO getOpp(Opportunity opportunity) {
+        OpportunityDTO opportunityDTO = new OpportunityDTO();
+        opportunityDTO.setId(opportunity.getId());
+        opportunityDTO.setProduct(opportunity.getProduct());
+        opportunityDTO.setQuantity(opportunity.getQuantity());
+        opportunityDTO.setStatus(opportunity.getStatus());
+        opportunityDTO.setDecisionMakerId(opportunity.getDecisionMakerId());
+        opportunityDTO.setSalesRepId(opportunity.getSalesRepId());
+        return opportunityDTO;
     }
 }
