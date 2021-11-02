@@ -67,7 +67,7 @@ public class ReportService {
                 for (SalesRepDTO salesRepDTO : salesreps){
                     ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(salesRepDTO.getName());
-                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.CLOSED_WON, salesRepDTO.getId()).size());
+                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.CLOSED_WON.toString(), salesRepDTO.getId()).size());
                     reportOutput.add(reportDTO);
                 }
                 break;
@@ -77,7 +77,7 @@ public class ReportService {
                 for (SalesRepDTO salesRepDTO : salesreps){
                     ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(salesRepDTO.getName());
-                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.CLOSED_LOST, salesRepDTO.getId()).size());
+                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.CLOSED_LOST.toString(), salesRepDTO.getId()).size());
                     reportOutput.add(reportDTO);
                 }
                 break;
@@ -87,7 +87,7 @@ public class ReportService {
                 for (SalesRepDTO salesRepDTO : salesreps){
                     ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(salesRepDTO.getName());
-                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.OPEN, salesRepDTO.getId()).size());
+                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.OPEN.toString(), salesRepDTO.getId()).size());
                     reportOutput.add(reportDTO);
                 }
                 break;
@@ -176,10 +176,9 @@ public class ReportService {
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_WON){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_WON){
                                 oppNumber += 1;
                             }
-                            oppNumber= oppNumber;
                         }
                     }
                     reportDTO.setValue(oppNumber);
@@ -199,7 +198,7 @@ public class ReportService {
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_LOST){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_LOST){
                                 oppNumber += 1;
                             }
                             oppNumber= oppNumber;
@@ -222,7 +221,7 @@ public class ReportService {
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.OPEN){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.OPEN){
                                 oppNumber += 1;
                             }
                             oppNumber= oppNumber;
@@ -262,7 +261,7 @@ public class ReportService {
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_WON){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_WON){
                                 oppNumber += 1;
                             }
                             oppNumber= oppNumber;
@@ -285,7 +284,7 @@ public class ReportService {
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_LOST){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_LOST){
                                 oppNumber += 1;
                             }
                             oppNumber= oppNumber;
@@ -308,7 +307,7 @@ public class ReportService {
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.OPEN){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.OPEN){
                                 oppNumber += 1;
                             }
                             oppNumber= oppNumber;
@@ -348,7 +347,7 @@ public class ReportService {
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_WON){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_WON){
                                 oppNumber += 1;
                             }
                             oppNumber= oppNumber;
@@ -371,7 +370,7 @@ public class ReportService {
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_LOST){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_LOST){
                                 oppNumber += 1;
                             }
                             oppNumber= oppNumber;
@@ -394,7 +393,7 @@ public class ReportService {
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.OPEN){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.OPEN){
                                 oppNumber += 1;
                             }
                             oppNumber= oppNumber;

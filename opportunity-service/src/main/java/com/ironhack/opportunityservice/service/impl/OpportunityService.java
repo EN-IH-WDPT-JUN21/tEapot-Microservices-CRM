@@ -70,8 +70,8 @@ public class OpportunityService implements IOpportunityService {
 
         Opportunity opportunity = new Opportunity(convertRequest.getOpportunityDTO(), contact.getId());
         opportunity = opportunityRepository.save(opportunity);
-
-        SalesRepDTO salesRepDTO = salesRepProxy.updateSalesRep(convertRequest.getSalesRepId(), opportunity.getId());
+        TransactionDTO transactionDTO = new TransactionDTO(lead.getId(), opportunity.getId());
+        SalesRepDTO salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
 
         AccountDTO account;
         if (accountId == null) {
@@ -129,15 +129,15 @@ public class OpportunityService implements IOpportunityService {
         return opportunityDTOList;
     }
 
-    public List<OpportunityDTO> getByStatusAndSalesrepId(Status status, Long salesRepId) {
+    public List<OpportunityDTO> getByStatusAndSalesrepId(String status, Long salesRepId) {
         List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
         if (status != null && salesRepId != null) {
-            List<Opportunity> opportunityList = opportunityRepository.findByStatusAndSalesRepId(status, salesRepId);
+            List<Opportunity> opportunityList = opportunityRepository.findByStatusAndSalesRepId(Status.valueOf(status.toUpperCase()), salesRepId);
             for (Opportunity opportunity : opportunityList) {
                 opportunityDTOList.add(getOpp(opportunity));
             }
         } else if (status != null) {
-            List<Opportunity> opportunityList = opportunityRepository.findByStatus(status);
+            List<Opportunity> opportunityList = opportunityRepository.findByStatus(Status.valueOf(status.toUpperCase()));
             for (Opportunity opportunity : opportunityList) {
                 opportunityDTOList.add(getOpp(opportunity));
             }
