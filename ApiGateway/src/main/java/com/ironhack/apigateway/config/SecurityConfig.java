@@ -58,7 +58,6 @@ public class SecurityConfig {
         userDetailsList.add(admin);
 
         return new MapReactiveUserDetailsService(userDetailsList);
-
     }
 
 
