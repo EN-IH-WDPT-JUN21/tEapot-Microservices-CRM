@@ -25,11 +25,19 @@ public class ILeadService implements LeadService {
     SalesRepProxy salesRepProxy;
 
     @Override
+    @Transactional
     public void deleteLead(Long id) {
         Optional<Lead> existingLead = leadRepository.findById(id);
 
+        // remove lead
         if(existingLead.isPresent())
             leadRepository.deleteById(id);
+
+        SalesRepDto salesRepDto = salesRepProxy.findSalesRep(existingLead.get().getSalesRepId());
+        salesRepDto.setTransactionType("REMOVE");
+
+        // remove leadId from salesRep
+        salesRepProxy.update(existingLead.get().getSalesRepId(),salesRepDto);
     }
 
     @Override
@@ -53,7 +61,7 @@ public class ILeadService implements LeadService {
         SalesRepDto salesRepDto;
 
         if(leadDto.getSalesRep().getId() == null) {
-            salesRepDto = salesRepProxy.createSalesRep(new SalesRepDto(leadDto.getSalesRep().getName()));
+            salesRepDto = salesRepProxy.createSalesRep(new SalesRepDto(leadDto.getSalesRep().getName(),"ADD"));
         } else {
             salesRepDto = salesRepProxy.findSalesRep(leadDto.getSalesRep().getId());
         }
