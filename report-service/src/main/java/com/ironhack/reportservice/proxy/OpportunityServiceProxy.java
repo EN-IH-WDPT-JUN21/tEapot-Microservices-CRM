@@ -16,10 +16,10 @@ public interface OpportunityServiceProxy {
     List<OpportunityDTO> getAllOpportunities();
 
     @GetMapping("/crm/opportunity/{id}")
-    OpportunityDTO getOpportunityById(@PathVariable Long id);
+    OpportunityDTO getById(@PathVariable("id") Long id);
 
-    @GetMapping("/crm/opportunitysales")
-    List<OpportunityDTO> getByStatusAndSalesrepId(@RequestParam("status") Status status, @RequestParam("salesreId")Long salesrepId);
+    @GetMapping("/crm/opportunity/opportunitysales")
+    List<OpportunityDTO> getByStatusAndSalesrepId(@RequestParam("status") String status, @RequestParam("id") Long salesrepId);
 
 
 }
