@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public interface SalesRepProxy {
 
     @GetMapping("/crm/salesrep/{id}")
-    SalesRepDto findSalesRep(@PathVariable(name="id") Long id);
+    SalesRepDto getById(@PathVariable(name="id") Long id);
 
     @PostMapping("/crm/salesrep")
     SalesRepDto createSalesRep(@RequestBody SalesRepDto salesRepDto);

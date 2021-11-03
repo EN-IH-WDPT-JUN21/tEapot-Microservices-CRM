@@ -31,13 +31,13 @@ public class ILeadService implements LeadService {
     @Transactional
     public LeadDto deleteLead(Long id) {
         Optional<Lead> existingLead = leadRepository.findById(id);
-        LeadDto leadDTO = new LeadDto();
+        LeadDto leadDTO = new LeadDto(existingLead);
         // remove lead
         if(existingLead.isPresent()) {
             leadDTO = modelMapper.map(existingLead.get(), LeadDto.class);
             leadRepository.deleteById(id);
 
-        SalesRepDto salesRepDto = salesRepProxy.findSalesRep(existingLead.get().getSalesRepId());
+        SalesRepDto salesRepDto = salesRepProxy.getById(existingLead.get().getSalesRepId());
         salesRepDto.setTransactionType("REMOVE");
 
         // remove leadId from salesRep
@@ -69,7 +69,7 @@ public class ILeadService implements LeadService {
         if(leadDto.getSalesRep().getId() == null) {
             salesRepDto = salesRepProxy.createSalesRep(new SalesRepDto(leadDto.getSalesRep().getName(),"ADD"));
         } else {
-            salesRepDto = salesRepProxy.findSalesRep(leadDto.getSalesRep().getId());
+            salesRepDto = salesRepProxy.getById(leadDto.getSalesRep().getId());
         }
 
         if(salesRepDto==null)
