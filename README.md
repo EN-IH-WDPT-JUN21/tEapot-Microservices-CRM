@@ -69,7 +69,7 @@
 This is a microservice reiteration of a [project of CRM application](https://github.com/EN-IH-WDPT-JUN21/DeadCodersSociety-ClubRickyMartin-Stage2-Homework-3)  which allow user to manage workflow of acquiring *leads* and convert them to sale *opportunities*.
 
 ### Class Diagram
-![Class Diagram](Server/src/main/resources/images/microservices diagram.jpg)
+![Class Diagram](Server/src/main/resources/images/microservices_diagram.jpg)
 
 ### Built With
 
