@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -11,6 +13,9 @@ public class SalesRepDto {
 
     private Long id;
     private String name;
+    private List<Long> leads;
+    private List<Long> opportunities;
+    private String transactionType;
 
 
     public SalesRepDto(Long salesRepId) {
@@ -18,6 +23,10 @@ public class SalesRepDto {
     }
 
     public SalesRepDto(String salesRepName) {
+        this.name = salesRepName;
+    }
+
+    public SalesRepDto(String salesRepName, String transactionType) {
         this.name = salesRepName;
     }
 }

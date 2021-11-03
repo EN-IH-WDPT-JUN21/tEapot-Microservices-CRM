@@ -157,7 +157,7 @@ Project Link: [https://github.com/EN-IH-WDPT-JUN21/tEapot-Microservices-CRM](htt
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/static/v1?label=Team&message=DeadCodersSociety&color=brightgreen&
+[contributors-shield]: https://img.shields.io/static/v1?label=Team&message=tEapot!&color=brightgreen&
 [contributors-url]: https://github.com/orgs/EN-IH-WDPT-JUN21/teams/teapot
 [CRM-Shield]: https://img.shields.io/static/v1?label=Project&message=CRM&color=yellowgreen&
 [CRM-url]: https://en.wikipedia.org/wiki/Customer_relationship_management
