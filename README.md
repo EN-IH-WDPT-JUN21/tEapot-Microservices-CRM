@@ -52,6 +52,12 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+      <ul>
+        <li><a href="#reporting-API-patterns">Reporting API Patterns</a></li>
+      </ul>
+     <ul>
+        <li><a href="#post-requests">Post Requests</a></li>
+      </ul>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#issues">Known Issues</a></li>
     <li><a href="#contributing">Contributing</a></li>
@@ -107,7 +113,7 @@ This application works on a API input, so every command should be sent as a HTTP
 </p>
 
 
-# Reporting API Patterns
+### Reporting API Patterns
 
 
 | type | route                                      | descriprion                                                                   | permissions |
@@ -147,7 +153,7 @@ This application works on a API input, so every command should be sent as a HTTP
 | GET  | /crm/report/min-opps-per-account           | Get minimum value of opportunities per account                                | ADMIN       |
 
 
-# How to Pass Post Requests
+### Post Requests
 
 
 Placeholder to explain convertLead etc.
