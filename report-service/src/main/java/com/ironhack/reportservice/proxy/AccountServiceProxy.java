@@ -11,17 +11,9 @@ import java.util.List;
 public interface AccountServiceProxy {
 
     @GetMapping("/crm/account/{id}")
-    public AccountDTO getById(@PathVariable("id") Long id);
+    AccountDTO getById(@PathVariable("id") Long id);
 
     @GetMapping("/crm/account")
-    public List<AccountDTO> getAll();
+    List<AccountDTO> getAll();
 
-    @PostMapping("/crm/account")
-    public AccountDTO create(@RequestBody TransactionDTO transaction);
-
-    @PutMapping("/crm/account/{id}")
-    public AccountDTO update(@PathVariable Long id, @RequestBody TransactionDTO transaction);
-
-    @DeleteMapping("/crm/account/{id}")
-    public void delete(@PathVariable Long id);
 }

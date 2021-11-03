@@ -27,7 +27,7 @@ public class Lead {
 
     private String companyName;
 
-    @Email
+//    @Email
     private String email;
     private Long salesRepId;
 

@@ -22,6 +22,6 @@ public class AccountDTO {
     private int employeeCount;
     private String city;
     private String country;
-    private List<Long> opportunityId;
-    private List<Long> contactId;
+    private List<Long> opportunities;;
+    private List<Long> contacts;
 }

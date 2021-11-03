@@ -2,6 +2,7 @@ package com.ironhack.leadservice.controller;
 
 import com.ironhack.leadservice.dao.Lead;
 import com.ironhack.leadservice.dto.LeadDto;
+import com.ironhack.leadservice.dto.SalesRepDto;
 import com.ironhack.leadservice.service.interfaces.LeadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,10 +29,10 @@ public class LeadController {
        return leadService.createLead(leadDto);
     }
 
-    @DeleteMapping("/{id")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteLead(@PathVariable(name="id") Long id) {
-        leadService.deleteLead(id);
+    public LeadDto deleteLead(@PathVariable(name="id") Long id) {
+        return leadService.deleteLead(id);
     }
 
     @GetMapping

@@ -4,6 +4,7 @@ import com.ironhack.opportunityservice.dao.Opportunity;
 import com.ironhack.opportunityservice.dto.*;
 import com.ironhack.opportunityservice.enums.Product;
 import com.ironhack.opportunityservice.enums.Status;
+import com.ironhack.opportunityservice.enums.Type;
 import com.ironhack.opportunityservice.proxy.AccountProxy;
 import com.ironhack.opportunityservice.proxy.ContactProxy;
 import com.ironhack.opportunityservice.proxy.LeadProxy;
@@ -70,8 +71,17 @@ public class OpportunityService implements IOpportunityService {
 
         Opportunity opportunity = new Opportunity(convertRequest.getOpportunityDTO(), contact.getId());
         opportunity = opportunityRepository.save(opportunity);
+        TransactionDTO transactionDTO = new TransactionDTO();
+        transactionDTO.setOpportunityId(opportunity.getId());
+        transactionDTO.setTransactionType(Type.ADD);
+        SalesRepDTO salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
+        salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
 
-        SalesRepDTO salesRepDTO = salesRepProxy.updateSalesRep(convertRequest.getSalesRepId(), opportunity.getId());
+        TransactionDTO transactionDTO2 = new TransactionDTO();
+        transactionDTO2.setLeadId(lead.getId());
+        transactionDTO2.setTransactionType(Type.ADD);
+        salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO2);
+
 
         AccountDTO account;
         if (accountId == null) {
@@ -129,15 +139,15 @@ public class OpportunityService implements IOpportunityService {
         return opportunityDTOList;
     }
 
-    public List<OpportunityDTO> getByStatusAndSalesrepId(Status status, Long salesRepId) {
+    public List<OpportunityDTO> getByStatusAndSalesrepId(String status, Long salesRepId) {
         List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
         if (status != null && salesRepId != null) {
-            List<Opportunity> opportunityList = opportunityRepository.findByStatusAndSalesRepId(status, salesRepId);
+            List<Opportunity> opportunityList = opportunityRepository.findByStatusAndSalesRepId(Status.valueOf(status.toUpperCase()), salesRepId);
             for (Opportunity opportunity : opportunityList) {
                 opportunityDTOList.add(getOpp(opportunity));
             }
         } else if (status != null) {
-            List<Opportunity> opportunityList = opportunityRepository.findByStatus(status);
+            List<Opportunity> opportunityList = opportunityRepository.findByStatus(Status.valueOf(status.toUpperCase()));
             for (Opportunity opportunity : opportunityList) {
                 opportunityDTOList.add(getOpp(opportunity));
             }

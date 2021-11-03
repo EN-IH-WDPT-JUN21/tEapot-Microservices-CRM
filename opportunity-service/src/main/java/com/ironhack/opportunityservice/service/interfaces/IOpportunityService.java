@@ -21,5 +21,5 @@ public interface IOpportunityService {
 
     List<OpportunityDTO> getByStatusAndProduct(Status status, Product product);
 
-    List<OpportunityDTO> getByStatusAndSalesrepId(Status status, Long salesRepId);
+    List<OpportunityDTO> getByStatusAndSalesrepId(String status, Long salesRepId);
 }

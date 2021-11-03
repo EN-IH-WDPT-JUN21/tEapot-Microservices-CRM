@@ -22,5 +22,4 @@ public class OpportunityDTO {
     private int quantity;
     private Long decisionMakerId;
     private Long salesRepId;
-    private Long accountId;
 }

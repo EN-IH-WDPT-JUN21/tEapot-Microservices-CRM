@@ -19,6 +19,7 @@ import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.modelmapper.ModelMapper;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,6 +44,11 @@ public class LeadServiceApplication {
 				.apis(RequestHandlerSelectors.basePackage("com.ironhack.leadservice.controller"))
 				.paths(PathSelectors.any())
 				.build();
+	}
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
 
 	@Component

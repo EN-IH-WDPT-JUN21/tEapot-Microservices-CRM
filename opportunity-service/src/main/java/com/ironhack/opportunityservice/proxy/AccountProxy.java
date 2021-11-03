@@ -6,15 +6,15 @@ import com.ironhack.opportunityservice.dto.AccountUpdateDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient("account-proxy")
+@FeignClient("account-service")
 public interface AccountProxy {
 
     @PostMapping("/crm/account")
-    AccountDTO createAccount(AccountCreationDTO accountDTO);
+    AccountDTO createAccount(@RequestBody AccountCreationDTO accountDTO);
 
     @PutMapping("/crm/account/{id}")
-    AccountDTO updateAccount(@PathVariable("id") Long id, AccountUpdateDTO accountDTO);
+    AccountDTO updateAccount(@PathVariable("id") Long id, @RequestBody AccountUpdateDTO accountDTO);
 
-    @PatchMapping(path = "/crm/account{id}")
+    @DeleteMapping(path = "/crm/account/{id}")
     AccountDTO deleteOpportunityFromAccounts(@PathVariable("opportunity_id") Long id);
 }
