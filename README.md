@@ -107,7 +107,7 @@ This application works on a API input, so every command should be sent as a HTTP
 </p>
 
 
-## Reporting API Patterns
+# Reporting API Patterns
 
 
 | type | route                                      | descriprion                                                                   | permissions |
@@ -147,7 +147,7 @@ This application works on a API input, so every command should be sent as a HTTP
 | GET  | /crm/report/min-opps-per-account           | Get minimum value of opportunities per account                                | ADMIN       |
 
 
-## How to Pass Post Requests
+# How to Pass Post Requests
 
 
 Placeholder to explain convertLead etc.
