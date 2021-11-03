@@ -13,10 +13,7 @@ import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,7 +33,6 @@ public class ReportService {
     //this will take command string as input and return a report DTO which is a combo of label and value
     public List<ReportDTO> getReport(String reportCommand) {
         List<ReportDTO> reportOutput = new ArrayList<>();
-        ReportDTO reportDTO = new ReportDTO();
         var salesreps = salesrepServiceProxy.getAll();
         var accounts = accountServiceProxy.getAll();
         var opportunities = opportunityServiceProxy.getAllOpportunities();
@@ -46,8 +42,9 @@ public class ReportService {
             //Get number of leads by sales representative
             case REPORT_LEAD_BY_SALESREP:
                 for (SalesRepDTO salesRepDTO : salesreps){
-                    reportDTO.setLabel(salesRepDTO.getRepName());
-                    reportDTO.setValue(salesRepDTO.getLeadList().size());
+                    ReportDTO reportDTO = new ReportDTO();
+                    reportDTO.setLabel(salesRepDTO.getName());
+                    reportDTO.setValue(salesRepDTO.getLeads().size());
                     reportOutput.add(reportDTO);
                 }
                 break;
@@ -55,8 +52,9 @@ public class ReportService {
             //Get number of opportunities by sales representative
             case REPORT_OPP_BY_SALESREP:
                 for (SalesRepDTO salesRepDTO : salesreps){
-                    reportDTO.setLabel(salesRepDTO.getRepName());
-                    reportDTO.setValue(salesRepDTO.getOpportunityList().size());
+                    ReportDTO reportDTO = new ReportDTO();
+                    reportDTO.setLabel(salesRepDTO.getName());
+                    reportDTO.setValue(salesRepDTO.getOpportunities().size());
                     reportOutput.add(reportDTO);
                 }
                 break;
@@ -64,8 +62,9 @@ public class ReportService {
             //Get number of opportunities with CLOSE-WON status by sales representative
             case REPORT_CLOSE_W_BY_SALESREP:
                 for (SalesRepDTO salesRepDTO : salesreps){
-                    reportDTO.setLabel(salesRepDTO.getRepName());
-                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.CLOSED_WON, salesRepDTO.getId()).size());
+                    ReportDTO reportDTO = new ReportDTO();
+                    reportDTO.setLabel(salesRepDTO.getName());
+                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.CLOSED_WON.toString(), salesRepDTO.getId()).size());
                     reportOutput.add(reportDTO);
                 }
                 break;
@@ -73,8 +72,9 @@ public class ReportService {
             //Get number of opportunities with CLOSE-LOST status by sales representative
             case REPORT_CLOSE_L_BY_SALESREP:
                 for (SalesRepDTO salesRepDTO : salesreps){
-                    reportDTO.setLabel(salesRepDTO.getRepName());
-                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.CLOSED_LOST, salesRepDTO.getId()).size());
+                    ReportDTO reportDTO = new ReportDTO();
+                    reportDTO.setLabel(salesRepDTO.getName());
+                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.CLOSED_LOST.toString(), salesRepDTO.getId()).size());
                     reportOutput.add(reportDTO);
                 }
                 break;
@@ -82,8 +82,9 @@ public class ReportService {
             //Get number of opportunities with OPEN status by sales representative
             case REPORT_OPEN_BY_SALESREP:
                 for (SalesRepDTO salesRepDTO : salesreps){
-                    reportDTO.setLabel(salesRepDTO.getRepName());
-                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.OPEN, salesRepDTO.getId()).size());
+                    ReportDTO reportDTO = new ReportDTO();
+                    reportDTO.setLabel(salesRepDTO.getName());
+                    reportDTO.setValue(opportunityServiceProxy.getByStatusAndSalesrepId(Status.OPEN.toString(), salesRepDTO.getId()).size());
                     reportOutput.add(reportDTO);
                 }
                 break;
@@ -94,8 +95,10 @@ public class ReportService {
                         opportunities.stream().collect(Collectors.groupingBy(w -> w.getProduct().toString()));
                 for (String key : oppsByProduct.keySet()) {
                     List<OpportunityDTO> value = oppsByProduct.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     reportDTO.setValue(value.size());
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -106,8 +109,10 @@ public class ReportService {
                                 .collect(Collectors.groupingBy(w -> w.getProduct().toString()));
                 for (String key : oppsWByProduct.keySet()) {
                     List<OpportunityDTO> value = oppsWByProduct.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     reportDTO.setValue(value.size());
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -118,8 +123,10 @@ public class ReportService {
                                 .collect(Collectors.groupingBy(w -> w.getProduct().toString()));
                 for (String key : oppsLByProduct.keySet()) {
                     List<OpportunityDTO> value = oppsLByProduct.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     reportDTO.setValue(value.size());
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -130,8 +137,10 @@ public class ReportService {
                                 .collect(Collectors.groupingBy(w -> w.getProduct().toString()));
                 for (String key : oppsOByProduct.keySet()) {
                     List<OpportunityDTO> value = oppsOByProduct.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     reportDTO.setValue(value.size());
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -141,12 +150,14 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getCountry()));
                 for (String key : oppsByCountry.keySet()) {
                     List<AccountDTO> value = oppsByCountry.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         oppNumber += accountDTO.getOpportunities().size();
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -156,18 +167,19 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getCountry()));
                 for (String key : oppsWByCountry.keySet()) {
                     List<AccountDTO> value = oppsWByCountry.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_WON){
+                            if(opportunityServiceProxy.getById(oppId).getStatus().equals(Status.CLOSED_WON)){
                                 oppNumber += 1;
                             }
-                            oppNumber= oppNumber;
                         }
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -177,18 +189,19 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getCountry()));
                 for (String key : oppsLByCountry.keySet()) {
                     List<AccountDTO> value = oppsLByCountry.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_LOST){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_LOST){
                                 oppNumber += 1;
                             }
-                            oppNumber= oppNumber;
                         }
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -198,18 +211,19 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getCountry()));
                 for (String key : oppsOByCountry.keySet()) {
                     List<AccountDTO> value = oppsOByCountry.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.OPEN){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.OPEN){
                                 oppNumber += 1;
                             }
-                            oppNumber= oppNumber;
                         }
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -219,12 +233,14 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getCity()));
                 for (String key : oppsByCity.keySet()) {
                     List<AccountDTO> value = oppsByCity.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         oppNumber += accountDTO.getOpportunities().size();
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -234,18 +250,19 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getCity()));
                 for (String key : oppsWByCity.keySet()) {
                     List<AccountDTO> value = oppsWByCity.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_WON){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_WON){
                                 oppNumber += 1;
                             }
-                            oppNumber= oppNumber;
                         }
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -255,18 +272,19 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getCity()));
                 for (String key : oppsLByCity.keySet()) {
                     List<AccountDTO> value = oppsLByCity.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_LOST){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_LOST){
                                 oppNumber += 1;
                             }
-                            oppNumber= oppNumber;
                         }
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -276,18 +294,19 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getCity()));
                 for (String key : oppsOByCity.keySet()) {
                     List<AccountDTO> value = oppsOByCity.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.OPEN){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.OPEN){
                                 oppNumber += 1;
                             }
-                            oppNumber= oppNumber;
                         }
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -297,12 +316,14 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getIndustry()));
                 for (String key : oppsByIndustry.keySet()) {
                     List<AccountDTO> value = oppsByIndustry.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         oppNumber += accountDTO.getOpportunities().size();
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -312,18 +333,19 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getIndustry()));
                 for (String key : oppsWByIndustry.keySet()) {
                     List<AccountDTO> value = oppsWByIndustry.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_WON){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_WON){
                                 oppNumber += 1;
                             }
-                            oppNumber= oppNumber;
                         }
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -333,18 +355,19 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getIndustry()));
                 for (String key : oppsLByIndustry.keySet()) {
                     List<AccountDTO> value = oppsLByIndustry.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.CLOSED_LOST){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.CLOSED_LOST){
                                 oppNumber += 1;
                             }
-                            oppNumber= oppNumber;
                         }
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
@@ -354,144 +377,170 @@ public class ReportService {
                         accounts.stream().collect(Collectors.groupingBy(w -> w.getIndustry()));
                 for (String key : oppsOByIndustry.keySet()) {
                     List<AccountDTO> value = oppsOByIndustry.get(key);
+                    ReportDTO reportDTO = new ReportDTO();
                     reportDTO.setLabel(key);
                     int oppNumber = 0;
                     for (AccountDTO accountDTO : value) {
                         List<Long> oppsByAcc = accountDTO.getOpportunities();
                         for(Long oppId: oppsByAcc){
-                            if(opportunityServiceProxy.getOpportunityById(oppId).getStatus()==Status.OPEN){
+                            if(opportunityServiceProxy.getById(oppId).getStatus()==Status.OPEN){
                                 oppNumber += 1;
                             }
-                            oppNumber= oppNumber;
                         }
                     }
                     reportDTO.setValue(oppNumber);
+                    reportOutput.add(reportDTO);
                 }
                 break;
 
             //Get average value of employees
             case MEAN_EMPCOUNT:
+                ReportDTO reportDto = new ReportDTO();
                 List<Integer> impMean = new ArrayList<>();
                 for (AccountDTO accountDTO : accounts){
                     impMean.add(accountDTO.getEmployeeCount());
                 }
-                reportDTO.setLabel("The average number of employees is: ");
-                reportDTO.setValue(getAvg(impMean));
+                reportDto.setLabel("The average number of employees is: ");
+                reportDto.setValue(getAvg(impMean));
+                reportOutput.add(reportDto);
                 break;
 
             //Get median value of employees
             case MEDIAN_EMPCOUNT:
+                ReportDTO reportDTO = new ReportDTO();
                 List<Integer> impCount = new ArrayList<>();
                 for (AccountDTO accountDTO : accounts){
                     impCount.add(accountDTO.getEmployeeCount());
                 }
                 reportDTO.setLabel("The median number of employees is: ");
                 reportDTO.setValue(getMedian(impCount));
+                reportOutput.add(reportDTO);
                 break;
 
             //Get maximum value of employees
             case MAX_EMPCOUNT:
+                ReportDTO reportDTO1 = new ReportDTO();
                 List<Integer> impMax = new ArrayList<>();
                 for (AccountDTO accountDTO : accounts){
                     impMax.add(accountDTO.getEmployeeCount());
                 }
-                reportDTO.setLabel("The maximum number of employees is: ");
-                reportDTO.setValue(getMax(impMax));
+                reportDTO1.setLabel("The maximum number of employees is: ");
+                reportDTO1.setValue(getMax(impMax));
+                reportOutput.add(reportDTO1);
                 break;
 
             //Get minimum value of employees
             case MIN_EMPCOUNT:
+                ReportDTO reportDTO2 = new ReportDTO();
                 List<Integer> impMin = new ArrayList<>();
                 for (AccountDTO accountDTO : accounts){
                     impMin.add(accountDTO.getEmployeeCount());
                 }
-                reportDTO.setLabel("The minimum number of employees is: ");
-                reportDTO.setValue(getMin(impMin));
+                reportDTO2.setLabel("The minimum number of employees is: ");
+                reportDTO2.setValue(getMin(impMin));
+                reportOutput.add(reportDTO2);
                 break;
 
             //Get average value of products
             case MEAN_QUANT:
+                ReportDTO reportDTO3 = new ReportDTO();
                 List<Integer> prodMean = new ArrayList<>();
                 for (OpportunityDTO opp: opportunities){
                     prodMean.add(opp.getQuantity());
                 }
-                reportDTO.setLabel("The average quantity is: ");
-                reportDTO.setValue(getAvg(prodMean));
+                reportDTO3.setLabel("The average quantity is: ");
+                reportDTO3.setValue(getAvg(prodMean));
+                reportOutput.add(reportDTO3);
                 break;
 
             //Get median value of products
             case MED_QUANT:
+                ReportDTO reportDTO4 = new ReportDTO();
                 List<Integer> prodCount = new ArrayList<>();
                 for (OpportunityDTO opp: opportunities){
                     prodCount.add(opp.getQuantity());
                 }
-                reportDTO.setLabel("The median quantity is: ");
-                reportDTO.setValue(getMedian(prodCount));
+                reportDTO4.setLabel("The median quantity is: ");
+                reportDTO4.setValue(getMedian(prodCount));
+                reportOutput.add(reportDTO4);
                 break;
 
             //Get maximum value of products
             case MAX_QUANT:
+                ReportDTO reportDTO5 = new ReportDTO();
                 List<Integer> prodMax = new ArrayList<>();
                 for (OpportunityDTO opp: opportunities){
                     prodMax.add(opp.getQuantity());
                 }
-                reportDTO.setLabel("The maximum quantity is: ");
-                reportDTO.setValue(getMax(prodMax));
+                reportDTO5.setLabel("The maximum quantity is: ");
+                reportDTO5.setValue(getMax(prodMax));
+                reportOutput.add(reportDTO5);
                 break;
 
             //Get minimum value of products
             case MIN_QUANT:
+                ReportDTO reportDTO6 = new ReportDTO();
                 List<Integer> prodMin = new ArrayList<>();
                 for (OpportunityDTO opp: opportunities){
                     prodMin.add(opp.getQuantity());
                 }
-                reportDTO.setLabel("The minimum quantity is: ");
-                reportDTO.setValue(getMin(prodMin));
+                reportDTO6.setLabel("The minimum quantity is: ");
+                reportDTO6.setValue(getMin(prodMin));
+                reportOutput.add(reportDTO6);
                 break;
 
             //Get average number of opportunities per account
             case MEAN_OPPS_PERR_ACC:
+                ReportDTO reportDTO7 = new ReportDTO();
                 List<Integer> meanOpps = new ArrayList<>();
                 for (AccountDTO accountDTO : accounts){
                     meanOpps.add(accountDTO.getOpportunities().size());
                 }
-                reportDTO.setLabel("The average number of opportunities per account is: ");
-                reportDTO.setValue(getAvg(meanOpps));
+                reportDTO7.setLabel("The average number of opportunities per account is: ");
+                reportDTO7.setValue(getAvg(meanOpps));
+                reportOutput.add(reportDTO7);
                 break;
 
             //Get median number of opportunities per account
             case MED_OPPS_PERR_ACC:
+                ReportDTO reportDTO8 = new ReportDTO();
                 List<Integer> medOpps = new ArrayList<>();
                 for (AccountDTO accountDTO : accounts){
                     medOpps.add(accountDTO.getOpportunities().size());
                 }
-                reportDTO.setLabel("The median number of opportunities per account is: ");
-                reportDTO.setValue(getMedian(medOpps));
+                reportDTO8.setLabel("The median number of opportunities per account is: ");
+                reportDTO8.setValue(getMedian(medOpps));
+                reportOutput.add(reportDTO8);
                 break;
 
             //Get maximum number of opportunities per account
             case MAX_OPPS_PERR_ACC:
+                ReportDTO reportDTO9 = new ReportDTO();
                 List<Integer> maxOpps = new ArrayList<>();
                 for (AccountDTO accountDTO : accounts){
                     maxOpps.add(accountDTO.getOpportunities().size());
                 }
-                reportDTO.setLabel("The maximum number of opportunities per account is: ");
-                reportDTO.setValue(getMax(maxOpps));
+                reportDTO9.setLabel("The maximum number of opportunities per account is: ");
+                reportDTO9.setValue(getMax(maxOpps));
+                reportOutput.add(reportDTO9);
                 break;
 
             //Get minimum number of opportunities per account
             case MIN_OPPS_PERR_ACC:
+                ReportDTO reportDTO10 = new ReportDTO();
                 List<Integer> minOpps = new ArrayList<>();
                 for (AccountDTO accountDTO : accounts){
                     minOpps.add(accountDTO.getOpportunities().size());
                 }
-                reportDTO.setLabel("The minimum number of opportunities per account is: ");
-                reportDTO.setValue(getMin(minOpps));
+                reportDTO10.setLabel("The minimum number of opportunities per account is: ");
+                reportDTO10.setValue(getMin(minOpps));
+                reportOutput.add(reportDTO10);
                 break;
             default:
-                reportDTO.setLabel("The answer to everything is: ");
-                reportDTO.setValue(42);
-                reportOutput.add(reportDTO);
+                ReportDTO reportDTOd = new ReportDTO();
+                reportDTOd.setLabel("The answer to everything is: ");
+                reportDTOd.setValue(42);
+                reportOutput.add(reportDTOd);
         }
         return reportOutput;
     }
@@ -528,6 +577,16 @@ public class ReportService {
             sum += i;
         }
         return sum.doubleValue()/ nums.size();
+    }
+
+    //method to find id-status pair
+    public Map<Long, Status> getMap(List<Long> oppsList){
+        Map<Long, Status> statusMap = new HashMap<>();
+        for(Long i: oppsList){
+            Status status = opportunityServiceProxy.getById(i).getStatus();
+            statusMap.put(i, status);
+        }
+        return statusMap;
     }
 
 }
