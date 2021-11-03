@@ -25,10 +25,4 @@ public class ApiGatewayConfiguration {
                         .uri("lb://REPORT-SERVICE"))
                 .build();
     }
-
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
 }
