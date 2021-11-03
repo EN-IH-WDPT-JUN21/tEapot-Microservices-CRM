@@ -32,6 +32,7 @@ public class Opportunity {
         setProduct(opportunityDTO.getProduct());
         setQuantity(opportunityDTO.getQuantity());
         setDecisionMakerId(decisionMakerId);
+        setSalesRepId(opportunityDTO.getSalesRepId());
     }
 
     public Opportunity(Status status, Product product, int quantity, long decisionMakerId, long salesRepId) {

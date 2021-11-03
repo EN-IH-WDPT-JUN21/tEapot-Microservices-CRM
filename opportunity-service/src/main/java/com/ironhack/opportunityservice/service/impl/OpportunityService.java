@@ -4,6 +4,7 @@ import com.ironhack.opportunityservice.dao.Opportunity;
 import com.ironhack.opportunityservice.dto.*;
 import com.ironhack.opportunityservice.enums.Product;
 import com.ironhack.opportunityservice.enums.Status;
+import com.ironhack.opportunityservice.enums.Type;
 import com.ironhack.opportunityservice.proxy.AccountProxy;
 import com.ironhack.opportunityservice.proxy.ContactProxy;
 import com.ironhack.opportunityservice.proxy.LeadProxy;
@@ -70,8 +71,17 @@ public class OpportunityService implements IOpportunityService {
 
         Opportunity opportunity = new Opportunity(convertRequest.getOpportunityDTO(), contact.getId());
         opportunity = opportunityRepository.save(opportunity);
-        TransactionDTO transactionDTO = new TransactionDTO(lead.getId(), opportunity.getId());
+        TransactionDTO transactionDTO = new TransactionDTO();
+        transactionDTO.setOpportunityId(opportunity.getId());
+        transactionDTO.setTransactionType(Type.ADD);
         SalesRepDTO salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
+        salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
+
+        TransactionDTO transactionDTO2 = new TransactionDTO();
+        transactionDTO2.setLeadId(lead.getId());
+        transactionDTO2.setTransactionType(Type.ADD);
+        salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO2);
+
 
         AccountDTO account;
         if (accountId == null) {

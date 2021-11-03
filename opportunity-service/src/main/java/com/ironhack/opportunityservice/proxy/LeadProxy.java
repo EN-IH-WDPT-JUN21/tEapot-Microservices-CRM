@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient("lead-service")
 public interface LeadProxy {
 
-    @DeleteMapping("/crm/lead/{id}")
+    @DeleteMapping("/crm/leads/{id}")
     LeadDTO deleteLead(@PathVariable("id") Long id);
 }

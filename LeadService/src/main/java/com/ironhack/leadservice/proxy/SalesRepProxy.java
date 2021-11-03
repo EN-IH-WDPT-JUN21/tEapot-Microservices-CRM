@@ -14,7 +14,7 @@ public interface SalesRepProxy {
     @PostMapping("/crm/salesrep")
     SalesRepDto createSalesRep(@RequestBody SalesRepDto salesRepDto);
 
-    @PutMapping("/{id}")
+    @PutMapping("/crm/salesrep/{id}")
     @ResponseStatus(HttpStatus.OK)
     SalesRepDto update(@PathVariable Long id, @RequestBody SalesRepDto salesRepDto);
 }

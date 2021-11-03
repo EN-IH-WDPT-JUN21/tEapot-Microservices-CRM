@@ -74,7 +74,7 @@ public class SalesRepService {
             return null;
         } else{
             SalesRep salesRep=salesRepRepository.findById(id).get();
-            if(transaction.getTransactionType().equals(Type.valueOf("ADD"))){
+            if(transaction.getTransactionType().equals(Type.ADD)){
                 if(!salesRep.getOpportunities().contains(transaction.getOpportunityId())){
                     salesRep.getOpportunities().add(transaction.getOpportunityId());
                 }
@@ -82,7 +82,7 @@ public class SalesRepService {
                     salesRep.getLeads().add(transaction.getLeadId());
                 }
             }
-            if(transaction.getTransactionType().equals(Type.valueOf("REMOVE"))){
+            if(transaction.getTransactionType().equals(Type.REMOVE)){
                 salesRep.getOpportunities().remove(transaction.getOpportunityId());
                 salesRep.getLeads().remove(transaction.getLeadId());
             }

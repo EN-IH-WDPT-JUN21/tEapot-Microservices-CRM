@@ -6,7 +6,7 @@ import com.ironhack.leadservice.dto.SalesRepDto;
 import com.ironhack.leadservice.proxy.SalesRepProxy;
 import com.ironhack.leadservice.repository.LeadRepository;
 import com.ironhack.leadservice.service.interfaces.LeadService;
-import javassist.NotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +22,28 @@ public class ILeadService implements LeadService {
     LeadRepository leadRepository;
 
     @Autowired
+    ModelMapper modelMapper;
+
+    @Autowired
     SalesRepProxy salesRepProxy;
 
     @Override
     @Transactional
-    public void deleteLead(Long id) {
+    public LeadDto deleteLead(Long id) {
         Optional<Lead> existingLead = leadRepository.findById(id);
-
+        LeadDto leadDTO = new LeadDto();
         // remove lead
-        if(existingLead.isPresent())
+        if(existingLead.isPresent()) {
+            leadDTO = modelMapper.map(existingLead.get(), LeadDto.class);
             leadRepository.deleteById(id);
 
         SalesRepDto salesRepDto = salesRepProxy.findSalesRep(existingLead.get().getSalesRepId());
         salesRepDto.setTransactionType("REMOVE");
 
         // remove leadId from salesRep
-        salesRepProxy.update(existingLead.get().getSalesRepId(),salesRepDto);
+         salesRepProxy.update(existingLead.get().getSalesRepId(),salesRepDto);
+        }
+        return leadDTO;
     }
 
     @Override
