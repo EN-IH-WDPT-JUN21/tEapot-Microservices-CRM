@@ -52,6 +52,12 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+      <ul>
+        <li><a href="#reporting-API-patterns">Reporting API Patterns</a></li>
+      </ul>
+     <ul>
+        <li><a href="#post-requests">Post Requests</a></li>
+      </ul>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#issues">Known Issues</a></li>
     <li><a href="#contributing">Contributing</a></li>
@@ -69,7 +75,7 @@
 This is a microservice reiteration of a [project of CRM application](https://github.com/EN-IH-WDPT-JUN21/DeadCodersSociety-ClubRickyMartin-Stage2-Homework-3)  which allow user to manage workflow of acquiring *leads* and convert them to sale *opportunities*.
 
 ### Class Diagram
-![Class Diagram](Server/src/main/resources/images/microservices diagram.jpg)
+![Class Diagram](Server/src/main/resources/images/microservices_diagram.jpg)
 
 ### Built With
 
@@ -104,8 +110,55 @@ Project contains several services. Run all of them by starting the main class of
 We recommend starting from the Server.
 This application works on a API input, so every command should be sent as a HTTP Request with valid parameters and/or body.
 
+Users with ADMIN role have most permissions (login: *admin*, password: *admin*).
+
 </p>
 
+
+### Reporting API Patterns
+
+
+| type | route                                      | descriprion                                                                   | permissions |
+| ---- | ------------------------------------------ | ----------------------------------------------------------------------------- | ----------- |
+| GET  | /crm/report/report-lead-by-salesrep        | Get number of leads by sales representative                                   | ADMIN       |
+| GET  | /crm/report/report-opportunity-by-salesrep | Get number of opportunities by sales representative                           | ADMIN       |
+| GET  | /crm/report/report-closed-won-by-salesrep  | Get number of opportunities with 'closed-won' status by sales representative  | ADMIN       |
+| GET  | /crm/report/report-closed-lost-by-salesrep | Get number of opportunities with 'closed-lost' status by sales representative | ADMIN       |
+| GET  | /crm/report/report-open-by-salesrep        | Get number of opportunities with 'open' status by sales representative        | ADMIN       |
+| GET  | /crm/report/report-opportunity-by-product  | Get number of opportunities by product type                                   | ADMIN       |
+| GET  | /crm/report/report-closed-won-by-product   | Get number of opportunities with 'closed-won' status by product type          | ADMIN       |
+| GET  | /crm/report/report-closed-lost-by-product  | Get number of opportunities with 'closed-lost' status by product type         | ADMIN       |
+| GET  | /crm/report/report-open-by-product         | Get number of opportunities with 'open' status by product type                | ADMIN       |
+| GET  | /crm/report/report-opportunity-by-country  | Get number of opportunities by country                                        | ADMIN       |
+| GET  | /crm/report/report-closed-won-by-country   | Get number of opportunities with 'closed-won' status by country               | ADMIN       |
+| GET  | /crm/report/report-closed-lost-by-country  | Get number of opportunities with 'closed-lost' status by country              | ADMIN       |
+| GET  | /crm/report/report-open-by-country         | Get number of opportunities with 'open' status by country                     | ADMIN       |
+| GET  | /crm/report/report-opportunity-by-city     | Get number of opportunities by city                                           | ADMIN       |
+| GET  | /crm/report/report-closed-won-by-city      | Get number of opportunities with 'closed-won' status by city                  | ADMIN       |
+| GET  | /crm/report/report-closed-lost-by-city     | Get number of opportunities with 'closed-lost' status by city                 | ADMIN       |
+| GET  | /crm/report/report-open-by-city            | Get number of opportunities with 'open' status by city                        | ADMIN       |
+| GET  | /crm/report/report-opportunity-by-industry | Get number of opportunities by industry                                       | ADMIN       |
+| GET  | /crm/report/report-closed-won-by-industry  | Get number of opportunities with 'closed-won' status by industry              | ADMIN       |
+| GET  | /crm/report/report-closed-lost-by-industry | Get number of opportunities with 'closed-lost' status by industry             | ADMIN       |
+| GET  | /crm/report/report-open-by-industry        | Get number of opportunities with 'open' status by industry                    | ADMIN       |
+| GET  | /crm/report/mean-employeecount             | Get average value of employees                                                | ADMIN       |
+| GET  | /crm/report/median-employeecount           | Get median value of employees                                                 | ADMIN       |
+| GET  | /crm/report/max-employeecount              | Get maximum value of employees                                                | ADMIN       |
+| GET  | /crm/report/min-employeecount              | Get minimum value of employees                                                | ADMIN       |
+| GET  | /crm/report/mean-quantity                  | Get average value of products                                                 | ADMIN       |
+| GET  | /crm/report/median-quantity                | Get median value of products                                                  | ADMIN       |
+| GET  | /crm/report/max-quantity                   | Get maximum value of products                                                 | ADMIN       |
+| GET  | /crm/report/min-quantity                   | Get minimum value of products                                                 | ADMIN       |
+| GET  | /crm/report/mean-opps-per-account          | Get average value of opportunities per account                                | ADMIN       |
+| GET  | /crm/report/median-opps-per-account        | Get median value of opportunities per account                                 | ADMIN       |
+| GET  | /crm/report/max-opps-per-account           | Get maximum value of opportunities per account                                | ADMIN       |
+| GET  | /crm/report/min-opps-per-account           | Get minimum value of opportunities per account                                | ADMIN       |
+
+
+### Post Requests
+
+
+Placeholder to explain convertLead etc.
 
 
 
