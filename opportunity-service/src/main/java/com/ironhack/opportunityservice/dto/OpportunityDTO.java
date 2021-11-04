@@ -6,6 +6,8 @@ import com.ironhack.opportunityservice.enums.Status;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -15,12 +17,16 @@ public class OpportunityDTO {
 
     private Long id;
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Status status;
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Product product;
+    @Min(1)
     private int quantity;
     private Long decisionMakerId;
-    private Long salesRepId; // TODO - remove
+    @NotNull
+    private Long salesRepId;
 
     public OpportunityDTO(Status status, Product product, int quantity, Long decisionMakerId, Long salesRepId){
         setStatus(status);

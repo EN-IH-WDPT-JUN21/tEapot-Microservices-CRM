@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.Optional;
 
@@ -18,11 +19,13 @@ import java.util.Optional;
 public class LeadDto {
 
     private Long id;
+    @Pattern(regexp = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)")
     private String name;
     @Pattern(regexp = "(^$|[0-9]{10})")
     private String phoneNumber;
-//    @Email
+    @Email(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")
     private String email;
+    @NotBlank
     private String companyName;
     private SalesRepDto salesRep;
 

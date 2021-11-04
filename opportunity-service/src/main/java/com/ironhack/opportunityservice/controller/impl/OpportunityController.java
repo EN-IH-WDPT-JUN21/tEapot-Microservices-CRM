@@ -8,13 +8,11 @@ import com.ironhack.opportunityservice.dto.StatusDTO;
 import com.ironhack.opportunityservice.enums.Product;
 import com.ironhack.opportunityservice.enums.Status;
 import com.ironhack.opportunityservice.service.interfaces.IOpportunityService;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,14 +37,14 @@ public class OpportunityController implements IOpportunityController {
 
     @PostMapping("/{account-id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ConversionReceipt convertLead(@PathVariable(name = "account-id") Long accountId, @RequestBody ConvertRequest convertRequest) {
+    public ConversionReceipt convertLead(@PathVariable(name = "account-id") Long accountId, @RequestBody @Valid ConvertRequest convertRequest) {
         return opportunityService.convertLead(accountId, convertRequest);
     }
 
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public OpportunityDTO updateStatus(@PathVariable("id") Long id, @RequestBody StatusDTO status){
+    public OpportunityDTO updateStatus(@PathVariable("id") Long id, @RequestBody @Valid StatusDTO status){
         return opportunityService.updateStatus(id, status);
     }
 
@@ -59,7 +57,7 @@ public class OpportunityController implements IOpportunityController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ConversionReceipt convertLead(@RequestBody ConvertRequest convertRequest) {
+    public ConversionReceipt convertLead(@RequestBody @Valid ConvertRequest convertRequest) {
         return opportunityService.convertLead(null, convertRequest);
     }
 

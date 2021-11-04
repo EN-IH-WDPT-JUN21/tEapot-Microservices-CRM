@@ -79,13 +79,13 @@ public class OpportunityService implements IOpportunityService {
         transactionDTO.setOpportunityId(opportunity.getId());
         transactionDTO.setTransactionType(Type.ADD);
 
-        SalesRepDTO salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
-        salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
+        SalesRepDTO salesRepDTO = salesRepProxy.update(convertRequest.getOpportunity().getSalesRepId(), transactionDTO);
+        salesRepDTO = salesRepProxy.update(convertRequest.getOpportunity().getSalesRepId(), transactionDTO);
 
         transactionDTO = new TransactionDTO();
         transactionDTO.setLeadId(lead.getId());
         transactionDTO.setTransactionType(Type.REMOVE);
-        salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
+        salesRepDTO = salesRepProxy.update(convertRequest.getOpportunity().getSalesRepId(), transactionDTO);
 
 
         AccountDTO account;

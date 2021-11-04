@@ -91,7 +91,6 @@ class OpportunityControllerTest {
         String body = objectMapper.writeValueAsString(new ConvertRequest(
                 new AccountDTO(),
                 new OpportunityDTO(Status.OPEN, Product.BOX, 42, 1L, 1L),
-                1L,
                 1L
         ));
 
@@ -106,8 +105,7 @@ class OpportunityControllerTest {
         body = objectMapper.writeValueAsString(new ConvertRequest(
                 new AccountDTO(Industry.PRODUCE, 289, "Pombal", "Portugal"),
                 new OpportunityDTO(Status.OPEN, Product.HYBRID, 42, 1L, 1L),
-                2L,
-                1L
+                2L
         ));
 
         mvcResult = mockMvc.perform(post("/crm/opportunity")
