@@ -155,7 +155,19 @@ Users with ADMIN role have most permissions (login: *admin*, password: *admin*).
 | GET  | /crm/report/min-opps-per-account           | Get minimum value of opportunities per account                                | ADMIN       |
 
 
-### Post Requests
+Calls to most services follow a similar pattern apart from the requests specified in the next section. For example:
+
+
+| type   | route             | descriprion                                             | permissions     |
+| ------ | ----------------- | ------------------------------------------------------- | --------------- |
+| GET    | /crm/account/{id} | Get account details with given id                       | ADMIN           |
+| GET    | /crm/account      | Get all accounts                                        | ADMIN           |
+| POST   | /crm/account      | Create new account                                      | ADMIN, SALESREP |
+| DELETE | /crm/account/{id} | Delete account with given id                            | ADMIN           |
+
+
+
+### More Complicated Post Requests
 
 
 Placeholder to explain convertLead etc.
