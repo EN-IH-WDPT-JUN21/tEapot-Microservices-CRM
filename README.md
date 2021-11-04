@@ -173,14 +173,23 @@ Calls to most services follow a similar pattern apart from the requests specifie
 
 To convert a *lead* into an *opportunity* a POST request with the following structure will need to be passed on */crm/opportunity/1*:
 {
+
     "leadId":1,
+    
     "opportunityDTO":{
+    
         "product":"FLATBED",
+        
         "quantity": 500,
+        
         "decisionMakerId": 2,
+        
         "salesRepId": 3
+        
     },
+    
      "salesRepId":3
+     
 }
 
 
