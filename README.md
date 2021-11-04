@@ -178,11 +178,17 @@ To convert a *lead* into an *opportunity* a POST request with the following stru
 
    {
     "leadId":4,
+    
     "opportunity":{
+    
         "product":"FLATBED",
+        
         "quantity": 500,
+        
         "salesRepId": 3
+        
     },
+    
      "salesRepId":3
 }
 
