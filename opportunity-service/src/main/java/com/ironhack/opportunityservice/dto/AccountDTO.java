@@ -24,4 +24,11 @@ public class AccountDTO {
     private String country;
     private List<Long> opportunities;;
     private List<Long> contacts;
+
+    public AccountDTO(Industry industry, int employeeCount, String city, String  country){
+        setIndustry(industry);
+        setEmployeeCount(employeeCount);
+        setCity(city);
+        setCountry(country);
+    }
 }

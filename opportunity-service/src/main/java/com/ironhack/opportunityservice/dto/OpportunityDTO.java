@@ -20,5 +20,13 @@ public class OpportunityDTO {
     private Product product;
     private int quantity;
     private Long decisionMakerId;
-    private Long salesRepId;
+    private Long salesRepId; // TODO - remove
+
+    public OpportunityDTO(Status status, Product product, int quantity, Long decisionMakerId, Long salesRepId){
+        setStatus(status);
+        setProduct(product);
+        setQuantity(quantity);
+        setDecisionMakerId(decisionMakerId);
+        setSalesRepId(salesRepId);
+    }
 }

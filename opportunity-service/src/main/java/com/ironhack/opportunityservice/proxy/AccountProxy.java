@@ -15,6 +15,6 @@ public interface AccountProxy {
     @PutMapping("/crm/account/{id}")
     AccountDTO updateAccount(@PathVariable("id") Long id, @RequestBody AccountUpdateDTO accountDTO);
 
-    @DeleteMapping(path = "/crm/account/{id}")
+    @DeleteMapping(path = "/crm/account/{opportunity_id}")
     AccountDTO deleteOpportunityFromAccounts(@PathVariable("opportunity_id") Long id);
 }

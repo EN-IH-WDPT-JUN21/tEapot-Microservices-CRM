@@ -72,23 +72,25 @@ public class OpportunityService implements IOpportunityService {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Contact was not created! Aborting request...");
         }
 
-        Opportunity opportunity = new Opportunity(convertRequest.getOpportunityDTO(), contact.getId());
+        Opportunity opportunity = new Opportunity(convertRequest.getOpportunity(), contact.getId());
         opportunity = opportunityRepository.save(opportunity);
+
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setOpportunityId(opportunity.getId());
         transactionDTO.setTransactionType(Type.ADD);
+
         SalesRepDTO salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
         salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
 
-        TransactionDTO transactionDTO2 = new TransactionDTO();
-        transactionDTO2.setLeadId(lead.getId());
-        transactionDTO2.setTransactionType(Type.ADD);
-        salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO2);
+        transactionDTO = new TransactionDTO();
+        transactionDTO.setLeadId(lead.getId());
+        transactionDTO.setTransactionType(Type.REMOVE);
+        salesRepDTO = salesRepProxy.update(convertRequest.getSalesRepId(), transactionDTO);
 
 
         AccountDTO account;
         if (accountId == null) {
-            AccountCreationDTO accountRequest = new AccountCreationDTO(convertRequest.getAccountDTO(), opportunity.getId(), contact.getId());
+            AccountCreationDTO accountRequest = new AccountCreationDTO(convertRequest.getAccount(), opportunity.getId(), contact.getId());
             account = accountProxy.createAccount(accountRequest);
         } else {
             AccountUpdateDTO accountRequest = new AccountUpdateDTO(opportunity.getId(), contact.getId());
@@ -106,10 +108,10 @@ public class OpportunityService implements IOpportunityService {
     }
 
     @Transactional
-    public OpportunityDTO updateStatus(Long id, Status status) {
+    public OpportunityDTO updateStatus(Long id, StatusDTO status) {
         Optional<Opportunity> opportunity = opportunityRepository.findById(id);
         if (opportunity.isPresent()) {
-            opportunity.get().setStatus(status);
+            opportunity.get().setStatus(status.getStatus());
             return getOpp(opportunity.get());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no Opportunity with id " + id);
@@ -142,15 +144,15 @@ public class OpportunityService implements IOpportunityService {
         return opportunityDTOList;
     }
 
-    public List<OpportunityDTO> getByStatusAndSalesrepId(String status, Long salesRepId) {
+    public List<OpportunityDTO> getByStatusAndSalesrepId(Status status, Long salesRepId) {
         List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
         if (status != null && salesRepId != null) {
-            List<Opportunity> opportunityList = opportunityRepository.findByStatusAndSalesRepId(Status.valueOf(status.toUpperCase()), salesRepId);
+            List<Opportunity> opportunityList = opportunityRepository.findByStatusAndSalesRepId(status, salesRepId);
             for (Opportunity opportunity : opportunityList) {
                 opportunityDTOList.add(getOpp(opportunity));
             }
         } else if (status != null) {
-            List<Opportunity> opportunityList = opportunityRepository.findByStatus(Status.valueOf(status.toUpperCase()));
+            List<Opportunity> opportunityList = opportunityRepository.findByStatus(status);
             for (Opportunity opportunity : opportunityList) {
                 opportunityDTOList.add(getOpp(opportunity));
             }

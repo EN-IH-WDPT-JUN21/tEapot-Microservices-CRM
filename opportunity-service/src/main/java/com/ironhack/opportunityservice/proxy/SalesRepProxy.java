@@ -17,5 +17,5 @@ public interface SalesRepProxy {
     List<SalesRepDTO> getAll();
 
     @PutMapping("/crm/salesrep/{id}")
-    public SalesRepDTO update(@PathVariable Long id, @RequestBody TransactionDTO transaction);
+    SalesRepDTO update(@PathVariable(name = "id") Long id, @RequestBody TransactionDTO transaction);
 }

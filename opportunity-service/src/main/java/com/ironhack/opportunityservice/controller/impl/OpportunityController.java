@@ -4,9 +4,13 @@ import com.ironhack.opportunityservice.controller.interfaces.IOpportunityControl
 import com.ironhack.opportunityservice.dto.ConversionReceipt;
 import com.ironhack.opportunityservice.dto.ConvertRequest;
 import com.ironhack.opportunityservice.dto.OpportunityDTO;
+import com.ironhack.opportunityservice.dto.StatusDTO;
 import com.ironhack.opportunityservice.enums.Product;
 import com.ironhack.opportunityservice.enums.Status;
 import com.ironhack.opportunityservice.service.interfaces.IOpportunityService;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,24 +36,37 @@ public class OpportunityController implements IOpportunityController {
         return opportunityService.getById(id);
     }
 
+
     @PostMapping("/{account-id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ConversionReceipt convertLead(@PathVariable("account-id") Long accountId, @RequestBody ConvertRequest convertRequest) {
+    public ConversionReceipt convertLead(@PathVariable(name = "account-id") Long accountId, @RequestBody ConvertRequest convertRequest) {
         return opportunityService.convertLead(accountId, convertRequest);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteOpportunity(@PathVariable("id") Long id) {
-        opportunityService.deleteOpportunity(id);
-    }
 
     @PatchMapping("/{id}")
-    public OpportunityDTO updateStatus(@PathVariable("id") Long id, @RequestBody Status status){
+    @ResponseStatus(HttpStatus.OK)
+    public OpportunityDTO updateStatus(@PathVariable("id") Long id, @RequestBody StatusDTO status){
         return opportunityService.updateStatus(id, status);
     }
 
-    @GetMapping("/opportunitysales")
-    public List<OpportunityDTO> getByStatusAndSalesrepId(@RequestParam("status") String status, @RequestParam("id") Long salesrepId){
+    @GetMapping("/opportunity-sales")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OpportunityDTO> getByStatusAndSalesrepId(@RequestParam("status") Status status, @RequestParam("id") Long salesrepId){
         return opportunityService.getByStatusAndSalesrepId(status, salesrepId);
+    }
+
+
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public ConversionReceipt convertLead(@RequestBody ConvertRequest convertRequest) {
+        return opportunityService.convertLead(null, convertRequest);
+    }
+
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOpportunity(@PathVariable("id") Long id) {
+        opportunityService.deleteOpportunity(id);
     }
 }
