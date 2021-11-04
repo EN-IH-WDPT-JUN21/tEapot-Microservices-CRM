@@ -29,26 +29,12 @@ public class SalesRepService {
                 .collect(Collectors.toList());
     }
 
-    public SalesRepDTO create(TransactionDTO transactionDTO){
-        SalesRep salesRep=convertToEntity(transactionDTO);
+    public SalesRepDTO create(SalesRepDTO salesRepDTO){
+        SalesRep salesRep=convertToEntity(salesRepDTO);
         //add opportunity if provided in transaction and absent in accountDTO
-        if(salesRep.getOpportunities()==null) {
-            salesRep.setOpportunities(new ArrayList<>());
-        }
-        if(transactionDTO.getOpportunityId()!=null) {
-            if(!salesRep.getOpportunities().contains(transactionDTO.getOpportunityId())) {
-                salesRep.getOpportunities().add(transactionDTO.getOpportunityId());
-            }
-        }
-        //add contact if provided in transaction and absent in accountDTO
-        if(salesRep.getLeads()==null){
-            salesRep.setLeads(new ArrayList<>());
-        }
-        if(transactionDTO.getLeadId()!=null) {
-            if (!salesRep.getLeads().contains(transactionDTO.getLeadId())) {
-                salesRep.getLeads().add(transactionDTO.getLeadId());
-            }
-        }
+
+        salesRep.setOpportunities(new ArrayList<>());
+        salesRep.setLeads(new ArrayList<>());
 
         salesRep=salesRepRepository.save(salesRep);
         return convertToDto(salesRep);
@@ -100,4 +86,7 @@ public class SalesRepService {
         return modelMapper.map(transactionDTO, SalesRep.class);
     }
 
+    public SalesRep convertToEntity(SalesRepDTO salesRepDTO){
+        return modelMapper.map(salesRepDTO, SalesRep.class);
+    }
 }
