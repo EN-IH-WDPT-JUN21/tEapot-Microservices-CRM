@@ -53,10 +53,10 @@
     </li>
     <li><a href="#usage">Usage</a></li>
       <ul>
-        <li><a href="#reporting-API-patterns">Reporting API Patterns</a></li>
+        <li><a href="#reporting-api-patterns">Reporting API Patterns</a></li>
       </ul>
      <ul>
-        <li><a href="#post-requests">More Complicated Post Requests</a></li>
+        <li><a href="#more-complicated-post-requests">More Complicated Post Requests</a></li>
       </ul>
     <li><a href="#roadmap">Testing</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -172,27 +172,53 @@ Calls to most services follow a similar pattern apart from the requests specifie
 ### More Complicated Post Requests
 
 
-To convert a *lead* into an *opportunity* a POST request with the following structure will need to be passed on */crm/opportunity/1*:
+To create new *SalesRep* POST request with the following structure will need to be passed on */crm/salesrep*:
+```sh
+    {
+        "name": "Jason Jackson"
+    }
+```
+
+
+To create new *lead* POST request with the following structure will need to be passed on */crm/leads*:
+```sh
+    {
+        "name": "Zach Goldberg",
+        "phoneNumber": "4810010010",
+        "companyName": "GoldMine",
+        "email": "goldbergZn@example.com",
+        "salesRep":{
+            "id": 3
+            }
+    }
+```
 
 
 
-   {
-   
-    "leadId":4,
-    
+To create new *Account* POST request with the following structure will need to be passed on */crm/account*:
+```sh
+    {
+        "industry": "MEDICAL",
+        "employeeCount": 2000,
+        "city": "Tokio",
+        "country": "Japan"
+    }
+```
+
+
+To convert a *lead* into an *opportunity* a POST request with the following structure will need to be passed on */crm/opportunity/{accountId}*:
+
+```sh
+{
+    "leadId":3,
     "opportunity":{
-    
         "product":"FLATBED",
-        
         "quantity": 500,
-        
         "salesRepId": 3
-        
     },
-    
      "salesRepId":3
 }
-
+```
 
 
 <!-- TESTING -->
