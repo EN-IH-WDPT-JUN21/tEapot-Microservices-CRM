@@ -206,6 +206,7 @@ Unit Testing is included in the application. If Opportunity-Service tests don't 
 <!-- ROADMAP -->
 ## Roadmap
 This project is still in early development. Future functionalities are yet to be determined.
+For instance, validations are currently handled by respective services, while a single validation-service could be developed for this purpose in the future.
 
 ## Issues
 See the [open issues](https://github.com/EN-IH-WDPT-JUN21/tEapot-Microservices-CRM/issues) for a list of known issues.
