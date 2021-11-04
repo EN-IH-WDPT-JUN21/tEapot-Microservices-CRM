@@ -9,7 +9,7 @@ import com.ironhack.opportunityservice.enums.Status;
 import java.util.List;
 
 public interface IOpportunityService {
-    List<OpportunityDTO> getOpportunities();
+    List<OpportunityDTO> getOpportunities(Status status, Product product);
 
     OpportunityDTO getById(Long id);
 

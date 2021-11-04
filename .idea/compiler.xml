@@ -7,15 +7,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Server" />
         <module name="ContactService" />
+        <module name="Server" />
         <module name="LeadService" />
         <module name="SalesRepService" />
         <module name="report-service" />
         <module name="ConfigServer" />
         <module name="AccountService" />
-        <module name="opportunity-service" />
         <module name="ApiGateway" />
+        <module name="opportunity-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

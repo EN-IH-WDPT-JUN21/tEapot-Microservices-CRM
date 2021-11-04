@@ -9,11 +9,10 @@ import com.ironhack.opportunityservice.enums.Status;
 import java.util.List;
 
 public interface IOpportunityController {
-    List<OpportunityDTO> getOpportunities();
+    List<OpportunityDTO> getOpportunities(Status status, Product product);
     OpportunityDTO getById(Long id);
     ConversionReceipt convertLead(Long id, ConvertRequest convertRequest);
     void deleteOpportunity(Long id);
     OpportunityDTO updateStatus(Long id, Status status);
-    List<OpportunityDTO> getByStatusAndProduct(Status status, Product product);
     List<OpportunityDTO> getByStatusAndSalesrepId(String status, Long salesRepId);
 }

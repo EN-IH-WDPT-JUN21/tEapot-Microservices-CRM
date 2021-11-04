@@ -39,7 +39,10 @@ public class OpportunityService implements IOpportunityService {
         this.opportunityRepository = opportunityRepository;
     }
 
-    public List<OpportunityDTO> getOpportunities() {
+    public List<OpportunityDTO> getOpportunities(Status status, Product product) {
+        if (status != null || product != null) {
+            return getByStatusAndProduct(status, product);
+        }
         List<OpportunityDTO> opportunityDTOS = new ArrayList<>();
         var opportunities = opportunityRepository.findAll();
         for (Opportunity opp : opportunities) {

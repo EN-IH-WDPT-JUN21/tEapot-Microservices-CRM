@@ -22,8 +22,8 @@ public class OpportunityController implements IOpportunityController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<OpportunityDTO> getOpportunities() {
-        return opportunityService.getOpportunities();
+    public List<OpportunityDTO> getOpportunities(Status status, Product product) {
+        return opportunityService.getOpportunities(status, product);
     }
 
     @GetMapping("/{id}")
@@ -46,11 +46,6 @@ public class OpportunityController implements IOpportunityController {
     @PatchMapping("/{id}")
     public OpportunityDTO updateStatus(@PathVariable("id") Long id, @RequestBody Status status){
         return opportunityService.updateStatus(id, status);
-    }
-
-    @GetMapping(path = "", params = {"status", "product"})
-    public List<OpportunityDTO> getByStatusAndProduct(@RequestParam("status") Status status, @RequestParam("product")Product product){
-        return opportunityService.getByStatusAndProduct(status, product);
     }
 
     @GetMapping("/opportunitysales")
