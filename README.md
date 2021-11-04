@@ -109,6 +109,7 @@ To get a local copy up and running follow these simple steps.
 Project contains several services. Run all of them by starting the main class of every service.
 We recommend starting from the Server.
 This application works on a API input, so every command should be sent as a HTTP Request with valid parameters and/or body.
+The Gateway runs on port 8000.
 
 Users with ADMIN role have most permissions (login: *admin*, password: *admin*).
 
