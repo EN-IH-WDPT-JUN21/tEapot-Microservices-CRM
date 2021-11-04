@@ -56,8 +56,9 @@
         <li><a href="#reporting-API-patterns">Reporting API Patterns</a></li>
       </ul>
      <ul>
-        <li><a href="#post-requests">Post Requests</a></li>
+        <li><a href="#post-requests">More Complicated Post Requests</a></li>
       </ul>
+    <li><a href="#roadmap">Testing</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#issues">Known Issues</a></li>
     <li><a href="#contributing">Contributing</a></li>
@@ -175,21 +176,23 @@ To convert a *lead* into an *opportunity* a POST request with the following stru
 
 
 
-   { "leadId":1,
-    
-    "opportunityDTO":{
-    
+   {
+    "leadId":4,
+    "opportunity":{
         "product":"FLATBED",
-        
         "quantity": 500,
-        
-        "decisionMakerId": 2,
-        
         "salesRepId": 3
-        
     },
-    
-     "salesRepId":3 }
+     "salesRepId":3
+}
+
+
+
+<!-- TESTING -->
+## Testing
+
+
+Unit Testing is included in the application. If Opportunity-Service tests don't run, please, restart the Lead-Service.
 
 
 
