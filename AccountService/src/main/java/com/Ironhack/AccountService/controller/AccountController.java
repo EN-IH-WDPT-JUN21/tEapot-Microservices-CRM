@@ -47,5 +47,11 @@ public class AccountController {
     public void delete(@PathVariable Long id) {
         accountService.deleteAccount(id);
     }
+    
+    @GetMapping("/ricky")
+    @ResponseStatus(HttpStatus.OK)
+    public String getRicky() {
+        return "https://www.youtube.com/watch?v=p47fEXGabaY";
+    }
 
 }
