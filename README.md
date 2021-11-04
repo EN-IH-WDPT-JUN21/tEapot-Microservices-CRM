@@ -110,7 +110,7 @@ Project contains several services. Run all of them by starting the main class of
 We recommend starting from the Server.
 This application works on a API input, so every command should be sent as a HTTP Request with valid parameters and/or body.
 
-User with ADMIN role have most permissions (login: *admin*, password: *admin*).
+Users with ADMIN role have most permissions (login: *admin*, password: *admin*).
 
 </p>
 
