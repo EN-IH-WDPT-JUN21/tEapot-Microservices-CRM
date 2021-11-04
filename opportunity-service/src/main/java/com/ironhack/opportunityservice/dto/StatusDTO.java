@@ -1,5 +1,6 @@
 package com.ironhack.opportunityservice.dto;
 
+import com.ironhack.opportunityservice.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +10,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConvertRequest {
-    private AccountDTO account;
-    private OpportunityDTO opportunity;
-    private Long leadId;
-    private Long salesRepId;
+public class StatusDTO {
+    private Status status;
 }

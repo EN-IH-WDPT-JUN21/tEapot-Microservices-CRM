@@ -79,8 +79,8 @@ public class ILeadService implements LeadService {
                 new Lead(
                         leadDto.getName(),
                         leadDto.getPhoneNumber(),
-                        leadDto.getCompanyName(),
                         leadDto.getEmail(),
+                        leadDto.getCompanyName(),
                         salesRepDto.getId()));
 
         return new LeadDto(newLead.getId(),
