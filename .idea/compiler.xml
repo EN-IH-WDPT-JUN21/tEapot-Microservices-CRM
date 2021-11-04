@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ContactService" />
+        <module name="Server" />
+        <module name="LeadService" />
+        <module name="SalesRepService" />
+        <module name="report-service" />
+        <module name="ConfigServer" />
+        <module name="AccountService" />
+        <module name="ApiGateway" />
+        <module name="opportunity-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="AccountService" target="17" />
+      <module name="ApiGateway" target="17" />
+      <module name="ConfigServer" target="17" />
+      <module name="ContactService" target="17" />
+      <module name="LeadService" target="17" />
+      <module name="opportunity-service" target="17" />
+      <module name="report-service" target="17" />
+      <module name="SalesRepService" target="17" />
+      <module name="Server" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="AccountService" options="-parameters" />
+      <module name="ApiGateway" options="-parameters" />
+      <module name="ConfigServer" options="-parameters" />
+      <module name="ContactService" options="-parameters" />
+      <module name="LeadService" options="-parameters" />
+      <module name="SalesRepService" options="-parameters" />
+      <module name="Server" options="-parameters" />
+      <module name="opportunity-service" options="-parameters" />
+      <module name="report-service" options="-parameters" />
+    </option>
+  </component>
+</project>
