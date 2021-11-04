@@ -38,8 +38,7 @@ public class AccountServiceApplication {
 			accountRepository.saveAll(List.of(
 					new Account("Boston", "USA", 2000, Industry.OTHER, new ArrayList(List.of(1L, 2L, 3L)), new ArrayList(List.of(1L, 2L, 3L))),
 					new Account("London", "UK", 5000, Industry.MEDICAL, new ArrayList(List.of(5L, 6L, 7L)), new ArrayList(List.of(5L, 6L, 7L))),
-					new Account("Madrid", "Spain", 456, Industry.PRODUCE, new ArrayList(List.of(8L, 9L, 10L)), new ArrayList(List.of(8L, 9L, 10L))),
-					new Account("Berlin", "Germany", 5098, Industry.ECOMMERCE, new ArrayList(List.of(11L, 12L, 13L)), new ArrayList(List.of(11L, 12L, 13L)))
+					new Account("Madrid", "Spain", 456, Industry.PRODUCE, new ArrayList(List.of(8L, 9L, 10L)), new ArrayList(List.of(8L, 9L, 10L)))
 
 					)
 			);
